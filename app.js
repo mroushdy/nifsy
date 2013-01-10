@@ -6,14 +6,17 @@
 var express = require('express')
   , models = require('./models')
   , http = require('http')
-  , path = require('path');
+  , path = require('path')
+  , hbs = require('hbs')
+  , viewHelpers = require('./views/helpers')
+  , viewPartials = require('./views/partials');
 
 var app = express();
 
 app.configure(function(){
   app.set('port', process.env.PORT || 3000);
   app.set('views', __dirname + '/views');
-  app.set('view engine', 'jade');
+  app.set('view engine', 'hbs');
   app.use(express.favicon(path.join(__dirname, 'public/favicon.ico')));
   app.use(express.logger('dev'));
   app.use(express.bodyParser());
@@ -26,11 +29,15 @@ app.configure('development', function(){
   app.use(express.errorHandler());
 });
 
-
-
 http.createServer(app).listen(app.get('port'), function(){
   console.log("Express server listening on port " + app.get('port'));
 });
+
+/*
+* Initializes handlebars partials and helpers 
+*/
+viewHelpers.Initialize(hbs);
+viewPartials.Initialize(hbs);
 
 /*
  * Exports the express app for other modules to use
