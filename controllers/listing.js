@@ -1,4 +1,4 @@
-
+var ListingModel = require("../models/listing").Listing
  
 exports.findById = function(req, res) {
 	//res.contentType('application/json');
@@ -6,11 +6,28 @@ exports.findById = function(req, res) {
 };
  
 exports.findAll = function(req, res) {
-	res.send('it works');
+	ListingModel.find().lean().exec(function(err, listings) {
+    if (!err){ 
+      res.send(JSON.stringify(listings));
+    }
+    else { 
+      res.send({'error':'An error has occurred'});
+    }
+  });
 };
  
 exports.addListing = function(req, res) {
-	res.send('it works');
+  var listing = new ListingModel();
+  listing.title = req.body.title;
+  listing.price = 0;
+  listing.save(function (err, listing) {
+    if (!err){ 
+      res.redirect('/listings');
+    }
+    else { 
+      res.send({'error':'An error has occurred'});
+    }
+  });
 };
  
 exports.updateListing = function(req, res) {

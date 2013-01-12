@@ -4,9 +4,9 @@
  */
 
 var express = require('express')
-  , models = require('./models')
   , http = require('http')
   , path = require('path')
+  , mongoose = require('mongoose')
   , hbs = require('hbs')
   , viewHelpers = require('./views/helpers')
   , viewPartials = require('./views/partials');
@@ -29,15 +29,20 @@ app.configure('development', function(){
   app.use(express.errorHandler());
 });
 
+/*
+ * Connect to databse 
+ */
+mongoose.connect('localhost', 'nifsy');
+
+/*
+ * Initializes handlebars partials and helpers 
+ */
+viewHelpers.Initialize(hbs);
+viewPartials.Initialize(hbs);
+
 http.createServer(app).listen(app.get('port'), function(){
   console.log("Express server listening on port " + app.get('port'));
 });
-
-/*
-* Initializes handlebars partials and helpers 
-*/
-viewHelpers.Initialize(hbs);
-viewPartials.Initialize(hbs);
 
 /*
  * Exports the express app for other modules to use

@@ -7,6 +7,8 @@ var homeController = require('./controllers/home')
 
 app.get('/about', homeController.about);
 
+app.get('/addlisting', homeController.addListing);
+
 app.get('/listings', listingController.findAll);
 app.get('/listings/:id', listingController.findById);
 app.post('/listings', listingController.addListing);
