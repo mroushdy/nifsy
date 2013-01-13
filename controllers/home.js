@@ -1,11 +1,15 @@
 /*
  * GET home page.
  */
-
-exports.about = function(req, res){
-  res.render('home', { title: 'About me' })
+ 
+var ListingModel = require("../models/listing").Listing
+exports.home = function(req, res){
+	ListingModel.find().lean().exec(function(err, listings) {
+    res.render('home', { title: 'home' , listings: listings});
+  });
+  
 };
 
 exports.addListing = function(req, res){
-  res.render('addListing', { title: 'Add Listing' })
+  res.render('addListing', { title: 'Add Listing' });
 };
