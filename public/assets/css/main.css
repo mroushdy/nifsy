@@ -3,6 +3,14 @@ body {
   padding-top: 40px;
 }
 
+.navbar-inner {
+  border-bottom: 1px solid #D0D0D0;
+  background-color: #F0F0F0;
+  background: -webkit-linear-gradient(top, white 0%, #F9F9F9 49%, #F2F2F2 51%, #F0F0F0 100%);
+  background: -moz-linear-gradient(top, white 0%, #F9F9F9 50%, #F2F2F2 50.1%, #F0F0F0 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffffff', endColorstr='#fff0f0f0', GradientType=0);
+}
+
 .jumbotron {
   position: relative;
   padding: 40px 0;
@@ -24,6 +32,26 @@ body {
 
 .listings-container {
   margin-top: 20px;
+}
+
+#footer {
+  background-color: whiteSmoke;
+  border-top: 1px solid #D7D7D4;
+}
+
+#footer #footer-wrap{
+  border-top: 1px solid #E7E7E4;
+}
+
+.container .credit {
+  margin: 20px 0;
+}
+
+/* Forms
+------------------------- */
+
+.form-horizontal .well {
+  background-color: #fff;
 }
 
 .form-horizontal .control-label {
