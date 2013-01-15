@@ -1,12 +1,14 @@
 var ListingModel = require("../models/listing").Listing
- 
+var listings_per_page = 10; 
+
 exports.findById = function(req, res) {
 	//res.contentType('application/json');
 	res.send('it works');
 };
  
 exports.findAll = function(req, res) {
-	ListingModel.find().lean().exec(function(err, listings) {
+  var page = req.param('p'); if (page == null) { page = 0; }
+	ListingModel.find().skip(page*listings_per_page).limit(listings_per_page).lean().exec(function(err, listings) {
     if (!err){ 
       res.send(JSON.stringify(listings));
     }

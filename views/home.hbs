@@ -1,30 +1,38 @@
-<div class="row listings-container">
-  <div class="span3">
-    <div class="sidebar-nav">
-      <ul class="nav nav-list">
-        <li class="active"><a href="#download-bootstrap"><i class="icon-chevron-right"></i> Download</a></li>
-        <li><a href="#file-structure"><i class="icon-chevron-right"></i> File structure</a></li>
-        <li><a href="#contents"><i class="icon-chevron-right"></i> What's included</a></li>
-        <li><a href="#html-template"><i class="icon-chevron-right"></i> HTML template</a></li>
-        <li><a href="#examples"><i class="icon-chevron-right"></i> Examples</a></li>
-        <li><a href="#what-next"><i class="icon-chevron-right"></i> What next?</a></li>
+<div class="jumbotron masthead">
+  <div class="container">
+    <h1>nifsy</h1>
+    <p>Ashal taree2a tebee3 we teshtery beeha 3al net.</p>
+  </div>
+</div>
+<div class="container">
+  <div class="row listings-container">
+    <div class="span3">
+      <div class="sidebar-nav">
+        <ul class="nav nav-list">
+          <li class="active"><a href="#download-bootstrap"><i class="icon-chevron-right"></i> Download</a></li>
+          <li><a href="#file-structure"><i class="icon-chevron-right"></i> File structure</a></li>
+          <li><a href="#contents"><i class="icon-chevron-right"></i> What's included</a></li>
+          <li><a href="#html-template"><i class="icon-chevron-right"></i> HTML template</a></li>
+          <li><a href="#examples"><i class="icon-chevron-right"></i> Examples</a></li>
+          <li><a href="#what-next"><i class="icon-chevron-right"></i> What next?</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="span9">
+      <ul class="thumbnails listings">
+      {{#each listings}}
+        <li class="span4 listing">
+          <a class="thumbnail">
+            <img src="/assets/img/boat.jpeg" alt="">
+            <h4>{{this.title}}}</h4>
+          </a>
+        </li>
+      {{/each}}
       </ul>
     </div>
   </div>
-  <div class="span9">
-    <ul class="thumbnails listings">
-    {{#each listings}}
-      <li class="span4 listing">
-        <a class="thumbnail">
-          <img src="/assets/img/boat.jpeg" alt="">
-          <h4>{{this.title}}}</h4>
-        </a>
-      </li>
-    {{/each}}
-    </ul>
-  </div>
 </div>
-{{> partial}}
+{{!> partial}}
 {{#extend "scripts"}}
 <script>
   console.log('it works!');

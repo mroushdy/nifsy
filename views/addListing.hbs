@@ -1,50 +1,52 @@
-<div class="row">
-  <div class="span9">
-  <h1> Bee3 7agatak </h1>
-  <p> Nifsy bitkhaleek tebee3 </p>
-  <form id="add-listing-form" class="form-horizontal" action="/listings" method="post">
-    <div class="well">
-        <div class="control-group">
-          <label class="control-label" for="title">Title</label>
-          <div class="controls">
-            <div class="help-block">Example block-level help text here.</div>
-            <input type="text" id="title" name="title" class="span6">
+<div class="container">
+  <div class="row">
+    <div class="span9">
+    <h1> Bee3 7agatak </h1>
+    <p> Nifsy bitkhaleek tebee3 </p>
+    <form id="add-listing-form" class="form-horizontal" action="/listings" method="post">
+      <div class="well">
+          <div class="control-group">
+            <label class="control-label" for="title">Title</label>
+            <div class="controls">
+              <div class="help-block">Example block-level help text here.</div>
+              <input type="text" id="title" name="title" class="span6">
+            </div>
           </div>
-        </div>
-        <div class="control-group">
-          <label class="control-label" for="brand">Brand</label>
-          <div class="controls">
-            <div class="help-block">Example block-level help text here.</div>
-            <input type="text" id="brand" name="brand" class="span6">
+          <div class="control-group">
+            <label class="control-label" for="brand">Brand</label>
+            <div class="controls">
+              <div class="help-block">Example block-level help text here.</div>
+              <input type="text" id="brand" name="brand" class="span6">
+            </div>
           </div>
-        </div>
-        <div class="control-group">
-          <label class="control-label" for="description">Description</label>
-          <div class="controls">
-            <div class="help-block">Example block-level help text here.</div>
-            <textarea rows="4" id="brand" name="brand" class="span6"></textarea>
+          <div class="control-group">
+            <label class="control-label" for="description">Description</label>
+            <div class="controls">
+              <div class="help-block">Example block-level help text here.</div>
+              <textarea rows="4" id="brand" name="brand" class="span6"></textarea>
+            </div>
           </div>
-        </div>
+      </div>
+          <div class="well">
+          <div class="control-group">
+            <label class="control-label" for="price">Price</label>
+            <div class="controls">
+              <input type="text" id="price" name="price" class="span2">
+              <span>EGP</span>
+            </div>
+          </div>
+          <div class="control-group">
+            <label class="control-label" for="condition">Condition</label>
+            <div class="controls">
+              <select id="condition" name="condition" class="span2">
+                <option value="new">New</option>
+                <option value="used">Used</option>
+              </select>
+            </div>
+          </div>
+      </div>
+    <input type="submit" value="Save & Continue" class="btn green"></input>
+    </form>
     </div>
-        <div class="well">
-        <div class="control-group">
-          <label class="control-label" for="price">Price</label>
-          <div class="controls">
-            <input type="text" id="price" name="price" class="span2">
-            <span>EGP</span>
-          </div>
-        </div>
-        <div class="control-group">
-          <label class="control-label" for="condition">Condition</label>
-          <div class="controls">
-            <select id="condition" name="condition" class="span2">
-              <option value="new">New</option>
-              <option value="used">Used</option>
-            </select>
-          </div>
-        </div>
-    </div>
-  <input type="submit" value="Submit" class="btn btn-primary"></input>
-  </form>
   </div>
 </div>
