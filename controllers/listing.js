@@ -18,6 +18,20 @@ exports.findAll = function(req, res) {
   });
 };
  
+exports.addImage = function(req, res) {
+  var listing = new ListingModel();
+  listing.title = req.body.title;
+  listing.price = 0;
+  listing.save(function (err, listing) {
+    if (!err){ 
+      res.redirect('/listings');
+    }
+    else { 
+      res.send({'error':'An error has occurred'});
+    }
+  });
+};
+
 exports.addListing = function(req, res) {
   var listing = new ListingModel();
   listing.title = req.body.title;
