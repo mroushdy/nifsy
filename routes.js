@@ -2,10 +2,15 @@ app = module.parent.exports.app;
 
 var homeController = require('./controllers/home')
   , userController = require('./controllers/user')
-  , listingController = require('./controllers/listing');
+  , listingController = require('./controllers/listing')
+  , passport = require('passport')
+  , authController = require('./controllers/auth');
 
 
 app.get('/', homeController.home);
+
+app.get('/connect/facebook', passport.authorize('facebook', { failureRedirect: '/account' }));
+app.get('/connect/facebook/callback', passport.authorize('facebook', { failureRedirect: '/account' }), authController.authorizeFacebookCallBack);
 
 app.get('/listings/new', homeController.addListing);
 app.get('/listings', listingController.findAll);

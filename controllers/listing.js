@@ -1,4 +1,4 @@
-var ListingModel = require("../models/listing").Listing
+var ListingModel = require("../models/listing").Listing;
 var listings_per_page = 10; 
 
 exports.findById = function(req, res) {

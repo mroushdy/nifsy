@@ -8,6 +8,7 @@ var express = require('express')
   , path = require('path')
   , mongoose = require('mongoose')
   , hbs = require('hbs')
+  , passport = require('passport')
   , viewHelpers = require('./views/helpers')
   , viewPartials = require('./views/partials');
 
@@ -20,6 +21,10 @@ app.configure(function(){
   app.use(express.favicon(path.join(__dirname, 'public/favicon.ico')));
   app.use(express.logger('dev'));
   app.use(express.bodyParser());
+  app.use(express.cookieParser());
+  app.use(express.session({ secret: 'keyboardcat' }));
+  app.use(passport.initialize());
+  app.use(passport.session());
   app.use(express.methodOverride());
   app.use(app.router);
   app.use(express.static(path.join(__dirname, 'public')));
