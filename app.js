@@ -12,6 +12,8 @@ var express = require('express')
   , viewHelpers = require('./views/helpers')
   , viewPartials = require('./views/partials');
 
+var store  = new express.session.MemoryStore;
+
 var app = express();
 
 app.configure(function(){
@@ -22,7 +24,7 @@ app.configure(function(){
   app.use(express.logger('dev'));
   app.use(express.bodyParser());
   app.use(express.cookieParser());
-  app.use(express.session({ secret: 'keyboardcat' }));
+  app.use(express.session({ secret: 'keyboardcat', store: store }));
   app.use(passport.initialize());
   app.use(passport.session());
   app.use(express.methodOverride());

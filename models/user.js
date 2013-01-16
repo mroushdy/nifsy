@@ -3,29 +3,28 @@ var mongoose = require("mongoose");
 var UserSchema = new mongoose.Schema({
   email: String,
   name: String,
-  password: { type: String, select: false }, //pull it in as needed in find and populate calls via field selection as '+password' 
+  gender: String,
+  birthday: Date,
+  //password: { type: String, select: false }, //uncomment if using normal authentication. //pull it in as needed in find and populate calls via field selection as '+password' 
   created: { type: Date, default: Date.now },
-  image: String,
-  providers: {
-    name: String,
+  facebook_provider: {
     uid: String,
     token: String
   }
 });
 
-var ProviderSchema = new mongoose.Schema({
-  name: String,
-  uid: String,
-  token: String
+UserSchema.virtual('picture.profile').get(function () {
+  return 'https://graph.facebook.com/' + this.facebook_provider.uid + "/picture?type=large"; //200px width variable height 
+});
+
+UserSchema.virtual('picture.small').get(function () {
+  return 'https://graph.facebook.com/' + this.facebook_provider.uid + "/picture?width=40&height=50"; 
 });
 
 var User = mongoose.model('User', UserSchema);
 
-var Provider = mongoose.model('Provider', ProviderSchema);
-
 module.exports = {
-  User: User,
-  Provider: Provider
+  User: User
 }
 
 //usage in controllers

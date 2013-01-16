@@ -9,14 +9,16 @@ var homeController = require('./controllers/home')
 
 app.get('/', homeController.home);
 
-app.get('/connect/facebook', passport.authorize('facebook', { failureRedirect: '/account' }));
-app.get('/connect/facebook/callback', passport.authorize('facebook', { failureRedirect: '/account' }), authController.authorizeFacebookCallBack);
+app.get('/connect/facebook', passport.authorize('facebook', { scope: ['email','publish_actions', 'user_birthday'], failureRedirect: '/account' }));
+app.get('/connect/facebook/callback', passport.authorize('facebook', { scope: ['email','publish_actions', 'user_birthday'], failureRedirect: '/account' }), authController.authorizeFacebookCallBack);
 
-app.get('/listings/new', homeController.addListing);
+//logout from facebook also needs to be done as per facebook api terms
+app.get('/logout', function(req, res){ req.logout(); res.redirect('/'); });
+
+app.get('/listings/new', listingController.addListing);
+app.post('/listings', listingController.createListing);
+
 app.get('/listings', listingController.findAll);
 app.get('/listings/:id', listingController.findById);
-app.post('/listings', listingController.addListing);
 app.put('/listings/:id', listingController.updateListing);
 app.delete('/listings/:id', listingController.deleteListing);
-
-app.get('/users', userController.list);
