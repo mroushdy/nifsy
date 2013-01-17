@@ -19,7 +19,8 @@
               <a class="yellow btn pull-right" href="/listings/new">LIST YOUR ITEM</a>
               <ul class="nav pull-right">
                 <li class="active"><a href="#">Home</a></li>
-                <li><a href="#about">About</a></li>
+                <li><a href="#">Login</a></li>
+                {{#if user}}<li><a href="#">{{user.name}}</a></li>{{/if}}
               </ul>
               <form class="navbar-search pull-left">
                 <input type="text" class="search-query" placeholder="Search">

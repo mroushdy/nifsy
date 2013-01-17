@@ -28,6 +28,11 @@ app.configure(function(){
   app.use(passport.initialize());
   app.use(passport.session());
   app.use(express.methodOverride());
+  /*
+   * Important to make user available in views. ***MUST BE PLACED BEFORE APP.ROUTER
+   */
+  app.use(function(req, res, next){ res.locals.user = req.user; next(); });
+
   app.use(app.router);
   app.use(express.static(path.join(__dirname, 'public')));
 });
@@ -36,9 +41,6 @@ app.configure('development', function(){
   app.use(express.errorHandler());
 });
 
-/*
- * Connect to databse 
- */
 mongoose.connect('localhost', 'nifsy');
 
 /*
@@ -57,3 +59,4 @@ http.createServer(app).listen(app.get('port'), function(){
  */
 exports.app = app;
 routes = require('./routes');
+

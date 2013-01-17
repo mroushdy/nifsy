@@ -9,10 +9,12 @@ var passport = require('passport')
 var User = require("../models/user").User;
 
 passport.serializeUser(function(user,done){
-    done(null, user);
+  done(null, user._id);
 });
-passport.deserializeUser(function(obj,done){
-    done(null, obj);
+passport.deserializeUser(function(userId,done){
+ User.findOne({_id: userId} ,function(err, user){
+    done(err, user);
+  });
 });
 
 
@@ -57,14 +59,13 @@ exports.authorizeFacebookCallBack = function(req, res) {
   var account = req.account;
   if(account) {
     User.findOne( { "facebook_provider.uid": account.uid }, function(err, user) {
-      if(user) {
-        console.log(user);
-        //check if a user in the database has this provider account and log him in
-        Login(req, res, user);
-      } else if(req.user) {  
+      if(req.user) {
         //if user is logged in but has no provider account link this provider account to his main account
         //used if two authentication methods are required. Currently only facebook auth is implemented.  
         res.redirect('/');
+      } else if(user) {  
+        //check if a user in the database has this provider account and log him in
+        Login(req, res, user);
       } else {
         /* uncomment if you want to use both facebook and normal authentication. Sends user to enter a password.
         req.session.account = account;
@@ -81,7 +82,6 @@ exports.authorizeFacebookCallBack = function(req, res) {
           token: account.token
         };
         user.save(function (err, user) {
-          console.log(user.picture.profile);
           Login(req, res, user);
         });
       }
