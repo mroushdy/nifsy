@@ -10,9 +10,11 @@ var express = require('express')
   , hbs = require('hbs')
   , passport = require('passport')
   , viewHelpers = require('./views/helpers')
-  , viewPartials = require('./views/partials');
+  , viewPartials = require('./views/partials')
+  , MongoStore = require('connect-mongo')(express);
 
-var store  = new express.session.MemoryStore;
+//make config a global variable so that every module can see it
+config = require('./config');
 
 var app = express();
 
@@ -24,15 +26,15 @@ app.configure(function(){
   app.use(express.logger('dev'));
   app.use(express.bodyParser());
   app.use(express.cookieParser());
-  app.use(express.session({ secret: 'keyboardcat', store: store }));
+  app.use(express.session({ secret: config.cookie_secret, store: new MongoStore(config.db) }));
   app.use(passport.initialize());
   app.use(passport.session());
   app.use(express.methodOverride());
-  /*
-   * Important to make user available in views. ***MUST BE PLACED BEFORE APP.ROUTER
-   */
+  
+  //Important to make user available in views. ***MUST BE PLACED BEFORE APP.ROUTER
   app.use(function(req, res, next){ res.locals.user = req.user; next(); });
 
+  //app.router must come after anything related to sessions.
   app.use(app.router);
   app.use(express.static(path.join(__dirname, 'public')));
 });
@@ -41,16 +43,17 @@ app.configure('development', function(){
   app.use(express.errorHandler());
 });
 
-mongoose.connect('localhost', 'nifsy');
-
 /*
  * Initializes handlebars partials and helpers 
  */
 viewHelpers.Initialize(hbs);
 viewPartials.Initialize(hbs);
 
-http.createServer(app).listen(app.get('port'), function(){
-  console.log("Express server listening on port " + app.get('port'));
+mongoose.connect(config.db.host, config.db.db);
+mongoose.connection.on('open', function () {
+  http.createServer(app).listen(app.get('port'), function(){
+    console.log("Express server listening on port " + app.get('port'));
+  });
 });
 
 /*

@@ -41,6 +41,8 @@ a:hover {
 
 .navbar .nav > li > a {
   padding: 13px 15px;
+  font-size: 11px;
+  font-weight: 600;
 }
 
 .jumbotron {
