@@ -10,7 +10,8 @@ var ListingSchema = new mongoose.Schema({
     index: true
   },*/
   price: { type: Number },
-  date: { type: Date, default: Date.now }
+  date: { type: Date, default: Date.now },
+  friends: [{type: String,  index:true}]
 });
 
 var Listing = mongoose.model('Listing', ListingSchema);

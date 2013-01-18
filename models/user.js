@@ -11,16 +11,13 @@ var UserSchema = new mongoose.Schema({
   facebook_provider: {
     uid: String,
     token: String
-  }
-});
-
-var FBConnectionSchema = new mongoose.Schema({
-  user_id: Schema.Types.ObjectId,
-  friends: [{
+  },
+  facebook_friends: [{
     name: String,
     fb_id: String
   }]
 });
+
 
 UserSchema.virtual('picture.profile').get(function () {
   return 'https://graph.facebook.com/' + this.facebook_provider.uid + "/picture?type=large"; //200px width variable height 
@@ -31,9 +28,7 @@ UserSchema.virtual('picture.small').get(function () {
 });
 
 var User = mongoose.model('User', UserSchema);
-var FBConnection = mongoose.model('FBConnection', FBConnectionSchema);
 
 module.exports = {
-  User: User,
-  FBConnection: FBConnection
+  User: User
 }
