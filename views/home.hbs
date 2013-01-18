@@ -36,9 +36,6 @@
 
 {{#if user.facebook_provider.token}}
 {{#extend "fbscripts"}}
-  $(document).ready(function() {
-    var FBids = ['addisonhardy','himi.ah', 'le.safius'];
-    GetBatchMutualFriends(FBids,'{{user.facebook_provider.token}}');
-  });
+
 {{/extend}}
 {{/if}}
