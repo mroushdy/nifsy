@@ -10,6 +10,32 @@
 		{{{block "stylesheets"}}}
 	</head>
   <body>
+    <div id="fb-root"></div>
+    <script>
+      window.fbAsyncInit = function() {
+        // init the FB JS SDK
+        FB.init({
+          appId      : '145309202292977',
+          //channelUrl : '//WWW.YOUR_DOMAIN.COM/channel.html',
+          status     : true, 
+          cookie     : true,
+          xfbml      : true
+        });
+
+        {{{block "fbscripts"}}}
+        // Additional initialization code such as adding Event Listeners goes here
+
+      };
+
+      (function(d, debug){
+         var js, id = 'facebook-jssdk', ref = d.getElementsByTagName('script')[0];
+         if (d.getElementById(id)) {return;}
+         js = d.createElement('script'); js.id = id; js.async = true;
+         js.src = "//connect.facebook.net/en_US/all" + (debug ? "/debug" : "") + ".js";
+         ref.parentNode.insertBefore(js, ref);
+       }(document, /*debug*/ false));
+    </script>
+
     <div id="wrap">
       <div class="navbar navbar-fixed-top">
         <div class="navbar-inner">
@@ -44,6 +70,7 @@
     </div>
     <script src="//code.jquery.com/jquery-latest.js"></script>
     <script src="/assets/bootstrap/js/bootstrap.min.js"></script>
+    <script src="/assets/js/app.js"></script>
     {{{block "scripts"}}}
   </body>
 </html>
