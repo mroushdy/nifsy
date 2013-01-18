@@ -1,4 +1,5 @@
-var mongoose = require("mongoose");
+var mongoose = require("mongoose")
+  , Schema = mongoose.Schema;
 
 var UserSchema = new mongoose.Schema({
   email: String,
@@ -13,6 +14,14 @@ var UserSchema = new mongoose.Schema({
   }
 });
 
+var FBConnectionSchema = new mongoose.Schema({
+  user_id: Schema.Types.ObjectId,
+  friends: [{
+    name: String,
+    fb_id: String
+  }]
+});
+
 UserSchema.virtual('picture.profile').get(function () {
   return 'https://graph.facebook.com/' + this.facebook_provider.uid + "/picture?type=large"; //200px width variable height 
 });
@@ -22,10 +31,9 @@ UserSchema.virtual('picture.small').get(function () {
 });
 
 var User = mongoose.model('User', UserSchema);
+var FBConnection = mongoose.model('FBConnection', FBConnectionSchema);
 
 module.exports = {
-  User: User
+  User: User,
+  FBConnection: FBConnection
 }
-
-//usage in controllers
-//var Listing = require("../models/listing").Listing;

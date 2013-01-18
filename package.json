@@ -12,6 +12,8 @@
     "passport": "~0.1.15",
     "passport-local": "~0.1.6",
     "passport-facebook": "~0.1.4",
-    "connect-mongo": "~0.2.0"
+    "connect-mongo": "~0.2.0",
+    "fb": "~0.1.0",
+    "request": "~2.12.0"
   }
 }

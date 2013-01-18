@@ -4,9 +4,12 @@
 
 var passport = require('passport')
   , LocalStrategy = require('passport-local').Strategy
-  , FacebookStrategy = require('passport-facebook').Strategy;
+  , FacebookStrategy = require('passport-facebook').Strategy
+  , FB = require('fb')
+  , request = require('request');
 
 var User = require("../models/user").User;
+var FBConnection = require("../models/user").FBConnection;
 
 passport.serializeUser(function(user,done){
   done(null, user._id);
@@ -82,6 +85,7 @@ exports.authorizeFacebookCallBack = function(req, res) {
           token: account.token
         };
         user.save(function (err, user) {
+          GetFBConnections(user);
           Login(req, res, user);
         });
       }
@@ -95,3 +99,35 @@ function Login(req, res, user) {
   });
 }
 
+function GetFBConnections(user) {
+  FB.setAccessToken(user.facebook_provider.token);
+  FBConnection.findOne( { "user_id": user._id }, function(err, connections) {
+    if(connections) { connections.remove(); }
+    FB.api('/me/friends', function(response) {
+      if(!response || response.error) { return; }
+      var fbc = new FBConnection();
+      fbc.user_id = user._id;
+      fbc.friends = [];
+      HandleGetFBConnections(response, fbc);
+    });
+  });
+}
+
+function HandleGetFBConnections(response, FBConnection) {
+
+  if(response.data) {
+    response.data.forEach(function(connection) { 
+      FBConnection.friends.push({name:connection.name, fb_id: connection.id});
+    });
+  }
+
+  if(response.paging.next){
+    request.get(response.paging.next, function(error, response, body){  
+      if (!error && response.statusCode == 200) {
+        HandleGetFBConnections(JSON.parse(response.body), FBConnection);
+      }
+    });
+  } else {
+    //save FBConnection to database;
+  }
+}
