@@ -17,6 +17,25 @@ exports.findAll = function(req, res) {
     }
   });
 };
+
+
+function listingsWithMutualFriends(user, listings, limit) {
+  if(user.friends) {
+    return listings.forEach(function(listing){
+      listing.mutual_friends = [];
+      for (var i = 0; i < user.friends.length; i++) {
+        for (var z = 0; z < listing.fb_friends.length; z++) {
+            var friend = user.friends[i];
+            if (friend.fb_id == listing.fb_friends[z]) {
+                listing.mutual_friends.push({name: friend.name, id: friend.fb_id});
+                break;
+            }
+        }
+        if(listing.mutual_friends>=limit) { break; }
+      }
+    });
+  } else { return listings; }
+}
  
 exports.addImage = function(req, res) {
 };
