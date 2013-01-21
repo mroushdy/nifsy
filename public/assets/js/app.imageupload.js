@@ -16,17 +16,29 @@ $(document).ready(function() {
         status('uploading the file ...');
  
         $(this).ajaxSubmit({                                                                                                                 
- 
+            
+            dataType: 'text',
+            
             error: function(xhr) {
 		      status('Error: ' + xhr.status);
             },
  
             success: function(response) {
-        		if(response.error) {
-                    status('Opps, something bad happened');
+                try {
+                    response = $.parseJSON(response);
+                }
+                catch(e) {
+                    status('Bad response from server');
                     return;
                 }
+
+                if(response.error) {
+                    status('Oops, something bad happened');
+                    return;
+                }
+
                 var imageUrlOnServer = response.path;
+                
                 status('Success, file uploaded to:' + imageUrlOnServer);
                 $('<img/>').attr('src', imageUrlOnServer).appendTo($('body'));
             }
