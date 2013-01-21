@@ -17,6 +17,7 @@ $(document).ready(function() {
             
             error: function(xhr) {
 		      statusUpload('Error: ' + xhr.status);
+              //error 413 means file is too large
               resetUpload();
             },
  
