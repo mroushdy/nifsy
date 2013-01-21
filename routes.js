@@ -16,7 +16,10 @@ app.get('/connect/facebook/callback', passport.authorize('facebook', { scope: ['
 app.get('/logout', function(req, res){ req.logout(); res.redirect('/'); });
 
 app.get('/listings/new', listingController.addListing);
-app.post('/listings', listingController.createListing);
+app.post('/listings/new', listingController.createListing);
+
+app.get('/listings/new/photos', listingController.addPhotos);
+app.post('/listings/new/photos', listingController.uploadPhoto);
 
 app.get('/listings', listingController.findAll);
 app.get('/listings/:id', listingController.findById);

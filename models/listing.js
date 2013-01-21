@@ -11,7 +11,7 @@ var ListingSchema = new mongoose.Schema({
   },*/
   price: { type: Number },
   date: { type: Date, default: Date.now },
-  fb_friends: [{type: String,  index:true}] //stores fb friend_ids
+  facebook_friends: [{type: String,  index:true}] //stores fb friend_ids
 });
 
 var Listing = mongoose.model('Listing', ListingSchema);
