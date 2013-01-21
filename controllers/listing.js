@@ -47,10 +47,10 @@ exports.addPhotos = function(req, res){
 exports.uploadPhoto = function(req, res) {
   var photoName = req.files.userPhoto.name;
   var serverPath = '/uploads/' + photoName;
-  require('fs').rename(req.files.userPhoto.path, '/Users/marwan/sites/nifsy/public/' + serverPath, function(error) {
+  require('fs').rename(req.files.userPhoto.path, require('path').dirname(require.main.filename) + '/public/' + serverPath, function(error) {
     if(error) {
       require('fs').unlink(req.files.userPhoto.path, function (err) { 
-        res.send(JSON.stringify({ error: 'Ah crap! File could not be moved' }));
+        res.send(JSON.stringify({ error: 'A problem happened with moving the file' }));
         return;
       });
     }

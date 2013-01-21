@@ -24,7 +24,10 @@ app.configure(function(){
   app.set('view engine', 'hbs');
   app.use(express.favicon(path.join(__dirname, 'public/favicon.ico')));
   app.use(express.logger('dev'));
-  app.use(express.bodyParser());
+  
+  app.use(express.bodyParser({ uploadDir: __dirname + '/public/tmp', keepExtensions: true   }));
+  //app.use(express.limit('4mb'));
+
   app.use(express.cookieParser());
   app.use(express.session({ secret: config.cookie_secret, store: new MongoStore(config.db) }));
   app.use(passport.initialize());

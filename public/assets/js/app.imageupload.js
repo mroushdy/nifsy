@@ -17,7 +17,7 @@ $(document).ready(function() {
             
             error: function(xhr) {
 		      statusUpload('Error: ' + xhr.status);
-              resetUpload()
+              resetUpload();
             },
  
             success: function(response) {
@@ -28,7 +28,9 @@ $(document).ready(function() {
                     statusUpload('Bad response from server');
                     return;
                 }
-
+                
+                console.log(response);
+                
                 if(response.error) {
                     statusUpload('Oops, something bad happened');
                     return;
@@ -36,7 +38,7 @@ $(document).ready(function() {
 
                 var imageUrlOnServer = response.path;
                 
-                resetUpload()
+                resetUpload();
                 
                 statusUpload('Success, file uploaded to:' + imageUrlOnServer);
                 $('<img/>').attr('src', imageUrlOnServer).appendTo($('body'));
