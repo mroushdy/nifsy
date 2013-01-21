@@ -1,26 +1,23 @@
 $(document).ready(function() {
  
-    status('Choose a file :)');
+    statusUpload('Choose a file :)');
+
+    var uploadform = $('#uploadForm');
  
     // Check to see when a user has selected a file                                                                                                                
     var timerId;
-    timerId = setInterval(function() {
-	if($('#userPhotoInput').val() !== '') {
-            clearInterval(timerId);
+    timerId = setInterval(checkUpload, 500);
  
-            $('#uploadForm').submit();
-        }
-    }, 500);
- 
-    $('#uploadForm').submit(function() {
-        status('uploading the file ...');
+    uploadform.submit(function() {
+        statusUpload('uploading the file ...');
  
         $(this).ajaxSubmit({                                                                                                                 
             
             dataType: 'text',
             
             error: function(xhr) {
-		      status('Error: ' + xhr.status);
+		      statusUpload('Error: ' + xhr.status);
+              resetUpload()
             },
  
             success: function(response) {
@@ -28,18 +25,20 @@ $(document).ready(function() {
                     response = $.parseJSON(response);
                 }
                 catch(e) {
-                    status('Bad response from server');
+                    statusUpload('Bad response from server');
                     return;
                 }
 
                 if(response.error) {
-                    status('Oops, something bad happened');
+                    statusUpload('Oops, something bad happened');
                     return;
                 }
 
                 var imageUrlOnServer = response.path;
                 
-                status('Success, file uploaded to:' + imageUrlOnServer);
+                resetUpload()
+                
+                statusUpload('Success, file uploaded to:' + imageUrlOnServer);
                 $('<img/>').attr('src', imageUrlOnServer).appendTo($('body'));
             }
 	});
@@ -48,8 +47,20 @@ $(document).ready(function() {
 	// a page refresh - don't forget this                                                                                                                      
 	return false;
     });
- 
-    function status(message) {
-	$('#status').text(message);
+    
+    function checkUpload() {
+        if($('#userPhotoInput').val() !== '') {
+            clearInterval(timerId);
+            uploadform.submit();
+        }
+    } 
+
+    function resetUpload() {
+        uploadform.resetForm();
+        timerId = setInterval(checkUpload, 500);
+    }
+
+    function statusUpload(message) {
+	    $('#status').text(message);
     }
 });
