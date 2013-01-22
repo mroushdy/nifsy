@@ -21,7 +21,7 @@ config.db = {
 	host: 'localhost'
 };
 
-config.alleup_config = require('path').dirname(require.main.filename) + '/alleup_config_dev.json';
+//config.alleup_config = require('path').dirname(require.main.filename) + '/alleup_config_dev.json';
 
 config.cookie_secret = 'keyboardcat';
 
