@@ -20,9 +20,19 @@ app.get('/listings/new', listingController.addListing);
 app.post('/listings/new', listingController.createListing);
 
 app.get('/listings/new/photos', listingController.addPhotos);
-app.post('/listings/new/photos', express.multipart({ uploadDir: __dirname + '/public/tmp', keepExtensions: true   }), listingController.uploadPhoto);
+app.post('/listings/new/photos', express.multipart({ uploadDir: __dirname + '/public/tmp', keepExtensions: true }), listingController.uploadPhoto);
+
 
 app.get('/listings', listingController.findAll);
 app.get('/listings/:id', listingController.findById);
 app.put('/listings/:id', listingController.updateListing);
 app.delete('/listings/:id', listingController.deleteListing);
+
+//require login middleware. not tested yet
+function requireLogin(req, res, next) {
+  if (req.user) {
+    next();
+  } else {
+    res.redirect("/");
+  }
+}

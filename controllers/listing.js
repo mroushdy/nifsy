@@ -40,9 +40,12 @@ function listingsWithMutualFriends(user, listings, limit) {
   }
 }
 
+
 exports.addPhotos = function(req, res){
   res.render('addListingPhotos', { title: 'Add Photos' });
 };
+
+
 
 exports.uploadPhoto = function(req, res) {
   var photoName = req.files.userPhoto.name;
@@ -57,6 +60,7 @@ exports.uploadPhoto = function(req, res) {
     res.send(JSON.stringify({ path: serverPath }));
   });
 };
+
 
 exports.addListing = function(req, res){
   res.render('addListing', { title: 'Add Listing' });

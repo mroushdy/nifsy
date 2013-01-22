@@ -1,0 +1,19 @@
+{
+  "variants": {
+      "listings": {
+        "resize": {
+            "mini" : "300x200",
+            "preview": "800x600"
+        },
+        "crop": {
+           "thumb": "200x200"
+        }
+      }
+  },
+
+  "storage": {
+      "dir": {
+          "path" : "./public/uploads/" 
+      }
+  }
+}

@@ -25,11 +25,11 @@ app.configure(function(){
   app.use(express.favicon(path.join(__dirname, 'public/favicon.ico')));
   app.use(express.logger('dev'));
   
+
   app.use(express.bodyParser());
-  
   //use the two bottom ones instead of bodyparser to prevent file uploads on all routes and only on the routes that accept uploads 
-  app.use(express.json());
-  app.use(express.urlencoded());
+  //app.use(express.json());
+  //app.use(express.urlencoded());
 
   app.use(express.limit('4mb'));
 
