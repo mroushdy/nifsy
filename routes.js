@@ -1,4 +1,4 @@
-app = module.parent.exports.app;
+var app = module.parent.exports.app;
 
 var express = require('express')
   , homeController = require('./controllers/home')

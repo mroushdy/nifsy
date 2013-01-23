@@ -1,0 +1,17 @@
+{
+	"variants": {
+		"resize": {
+			"version1" : "200x200",
+			"version2": "800x600"
+		},
+		"crop": {
+			"thumb": "200x200"
+		}
+	},
+	
+	"storage": {
+		"dir": {
+			"path" : "./public/uploads/"
+		}
+	}
+}

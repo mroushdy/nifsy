@@ -25,7 +25,6 @@ app.configure(function(){
   app.use(express.favicon(path.join(__dirname, 'public/favicon.ico')));
   app.use(express.logger('dev'));
   
-
   app.use(express.bodyParser());
   //use the two bottom ones instead of bodyparser to prevent file uploads on all routes and only on the routes that accept uploads 
   //app.use(express.json());
@@ -37,8 +36,9 @@ app.configure(function(){
   app.use(express.session({ secret: config.cookie_secret, store: new MongoStore(config.db) }));
   app.use(passport.initialize());
   app.use(passport.session());
-  app.use(express.methodOverride());
   
+  app.use(express.methodOverride());
+
   //Important to make user available in views. ***MUST BE PLACED BEFORE APP.ROUTER
   app.use(function(req, res, next){ res.locals.user = req.user; next(); });
 
@@ -64,10 +64,15 @@ mongoose.connection.on('open', function () {
   });
 });
 
+app.post('/upload', express.multipart({ uploadDir: __dirname + '/public/tmp', keepExtensions: true }), function(req, res) {
+  res.end();
+});
+
 /*
  * Exports the express app for other modules to use
  * all route matches go the routes.js file
  */
 exports.app = app;
+exports.express = express;
 routes = require('./routes');
 

@@ -1,6 +1,9 @@
 var Listing = require("../models/listing").Listing;
 var listings_per_page = 10; 
 
+var  Alleup = require('alleup');
+var alleup = new Alleup({storage : "dir", config_file: "alleup_config.json"})
+
 exports.findById = function(req, res) {
 	//res.contentType('application/json');
 	res.send('it works');
@@ -47,6 +50,17 @@ exports.addPhotos = function(req, res){
 
 
 
+
+exports.uploadPhoto = function(req, res) {
+  alleup.makeVariants(req.files.userPhoto, function(err, file){
+      console.log("FILE UPLOADED: " + file);
+      // THIS YOU CAN SAVE FILE TO DATABASE FOR EXAMPLE
+      res.end();
+  });
+};
+
+
+/*
 exports.uploadPhoto = function(req, res) {
   var photoName = req.files.userPhoto.name;
   var serverPath = '/uploads/' + photoName;
@@ -60,7 +74,7 @@ exports.uploadPhoto = function(req, res) {
     res.send(JSON.stringify({ path: serverPath }));
   });
 };
-
+*/
 
 exports.addListing = function(req, res){
   res.render('addListing', { title: 'Add Listing' });
