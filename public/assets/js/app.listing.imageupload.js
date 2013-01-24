@@ -10,7 +10,7 @@ $(document).ready(function() {
  
     uploadform.submit(function() {
         statusUpload('uploading the file ...');
- 
+
         $(this).ajaxSubmit({                                                                                                                 
             
             dataType: 'text',
@@ -51,8 +51,22 @@ $(document).ready(function() {
 	return false;
     });
     
+    function isImage(filename) {
+        var ext = filename.split('.').pop();
+        switch (ext.toLowerCase()) {
+        case 'jpg':
+        case 'jpeg':
+        case 'gif':
+        case 'png':
+            //etc
+            return true;
+        }
+        return false;
+    }
+
     function checkUpload() {
         if($('#userPhotoInput').val() !== '') {
+            if(!isImage($('#userPhotoInput').val())){ statusUpload('this file is not an image'); return; }
             clearInterval(timerId);
             uploadform.submit();
         }

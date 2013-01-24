@@ -1,7 +1,7 @@
 var Listing = require("../models/listing").Listing;
 var listings_per_page = 10; 
-
-var  Alleup = require('alleup');
+var async  = require('async');
+var Alleup = require('alleup');
 var alleup = new Alleup({storage : "dir", config_file: "alleup_config.json"})
 
 exports.findById = function(req, res) {
@@ -48,39 +48,44 @@ exports.addPhotos = function(req, res){
   res.render('addListingPhotos', { title: 'Add Photos' });
 };
 
-
-
-
 exports.uploadPhoto = function(req, res) {
-  //note using makeVarieants instead of upload because passport.session does not let alleup.upload work.
-  alleup.makeVariants(req.files.userPhoto, function(err, file){
-      console.log("FILE UPLOADED: " + file);
-      // THIS YOU CAN SAVE FILE TO DATABASE FOR EXAMPLE
-      if(err) {
-        console.log(err);
-        res.send(JSON.stringify({ error: 'File not supported' }));
-        return;
-      }
-      res.send(JSON.stringify({ path: alleup.url(file, 'thumb').replace('./public/','') }));
+  
+  res.set({
+    'Access-Control-Allow-Origin': '*',
+    'Access-Control-Allow-Methods': 'OPTIONS, HEAD, GET, POST, PUT, DELETE',
+    'Content-Type':'application/json'
   });
-};
 
+  var files = [];
 
-/*
-exports.uploadPhoto = function(req, res) {
-  var photoName = req.files.userPhoto.name;
-  var serverPath = '/uploads/' + photoName;
-  require('fs').rename(req.files.userPhoto.path, require('path').dirname(require.main.filename) + '/public/' + serverPath, function(error) {
-    if(error) {
-      require('fs').unlink(req.files.userPhoto.path, function (err) { 
-        res.send(JSON.stringify({ error: 'A problem happened with moving the file' }));
-        return;
+  async.forEach(req.files.files
+  , function(uploaded_file, callback){
+      alleup.makeVariants(uploaded_file, function(err, saved_file){
+        if(err) {
+          callback(err);
+          return;
+        }
+        // ToDo SAVE FILE TO DATABASE
+        var result = {};
+        result.size = uploaded_file.size;
+        result.name = uploaded_file.name;
+        result.delete_type = 'DELETE';
+        result.thumbnail_url = alleup.url(saved_file, 'thumb').replace('./public/','');
+        result.url = alleup.url(saved_file, 'version1').replace('./public/','');
+        result.delete_url = '';
+        files.push(result);
+        callback(null);
       });
     }
-    res.send(JSON.stringify({ path: serverPath }));
+  , function(err){
+      if(err) {
+        console.log(err);
+        res.send({'error': 'The file is not an image.'});
+      } else {
+        res.send({'files': files});
+      }
   });
 };
-*/
 
 exports.addListing = function(req, res){
   res.render('addListing', { title: 'Add Listing' });
