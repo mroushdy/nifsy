@@ -52,10 +52,16 @@ exports.addPhotos = function(req, res){
 
 
 exports.uploadPhoto = function(req, res) {
+  //note using makeVarieants instead of upload because passport.session does not let alleup.upload work.
   alleup.makeVariants(req.files.userPhoto, function(err, file){
       console.log("FILE UPLOADED: " + file);
       // THIS YOU CAN SAVE FILE TO DATABASE FOR EXAMPLE
-      res.end();
+      if(err) {
+        console.log(err);
+        res.send(JSON.stringify({ error: 'File not supported' }));
+        return;
+      }
+      res.send(JSON.stringify({ path: alleup.url(file, 'thumb').replace('./public/','') }));
   });
 };
 

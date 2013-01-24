@@ -16,6 +16,8 @@ var express = require('express')
 //make config a global variable so that every module can see it
 config = require('./config');
 
+var alloweduploadpaths = ['/listings/new/photos/upload'];
+
 var app = express();
 
 app.configure(function(){
@@ -25,10 +27,19 @@ app.configure(function(){
   app.use(express.favicon(path.join(__dirname, 'public/favicon.ico')));
   app.use(express.logger('dev'));
   
-  app.use(express.bodyParser());
+  //app.use(express.bodyParser());
   //use the two bottom ones instead of bodyparser to prevent file uploads on all routes and only on the routes that accept uploads 
-  //app.use(express.json());
-  //app.use(express.urlencoded());
+  app.use(express.json());
+  app.use(express.urlencoded());
+
+  //below adds express.multipart only to the allowed upload routes. Note: its not added to each route individually as a middleware because it needs to be before passport.session()
+  app.use(function(req, res, next){ 
+    if(alloweduploadpaths.indexOf(req.path)+1) { 
+      eval(express.multipart({ uploadDir: __dirname + '/public/tmp', keepExtensions: true }))(req, res, next); 
+    } else {
+      next();
+    }
+  });
 
   app.use(express.limit('4mb'));
 
