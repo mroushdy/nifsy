@@ -32,6 +32,27 @@ $(function () {
         )
     );
 
+    $('#fileupload').fileupload('option', {
+        maxFileSize: 2000000,
+        autoUpload: true,
+        acceptFileTypes: /(\.|\/)(gif|jpe?g|png)$/i,
+        process: [
+            {
+                action: 'load',
+                fileTypes: /^image\/(gif|jpeg|png)$/,
+                maxFileSize: 2000000 // 2MB
+            },
+            {
+                action: 'resize',
+                maxWidth: 1440,
+                maxHeight: 900
+            },
+            {
+                action: 'save'
+            }
+        ]
+    });
+
     if (window.location.hostname === 'blueimp.github.com') {
         // Demo settings:
         $('#fileupload').fileupload('option', {
