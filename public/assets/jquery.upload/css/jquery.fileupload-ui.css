@@ -33,7 +33,10 @@
   margin-bottom: 5px;
 }
 .files .progress {
-  width: 200px;
+  /*width: 200px;*/
+  top: 50%;
+  position: relative;
+  margin-top: -10px;
 }
 .progress-animated .bar {
   background: url(../img/progressbar.gif) !important;
@@ -49,6 +52,32 @@
 }
 .fileupload-processing .fileupload-loading {
   display: block;
+}
+
+
+.template-upload .cancel button, .template-download .delete button {
+  position: absolute;
+  right: 4px;
+  top: 4px;
+}
+
+.thumbnails li.template-upload, .thumbnails li.template-download {
+  width: 170px;
+  height: 130px;
+}
+
+.template-upload .thumbnail, .template-download .thumbnail  {
+  position: relative;
+  width: 160px;
+  height: 120px;
+}
+
+.template-upload .thumbnail .holder {
+  position: relative;
+  top: 0px;
+  height: 100px;
+  padding: 10px;
+  background-color: rgb(245,245,241);
 }
 
 /* Fix for IE 6: */
