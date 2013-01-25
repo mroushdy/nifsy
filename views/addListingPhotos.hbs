@@ -18,18 +18,9 @@
                 <!-- The fileinput-button span is used to style the file input field as button -->
                 <span class="btn btn-success fileinput-button">
                     <i class="icon-plus icon-white"></i>
-                    <span>Add files...</span>
+                    <span>Add Photos</span>
                     <input type="file" name="files[]" multiple>
                 </span>
-            </div>
-            <!-- The global progress information -->
-            <div class="span5 fileupload-progress fade">
-                <!-- The global progress bar -->
-                <div class="progress progress-success progress-striped active" role="progressbar" aria-valuemin="0" aria-valuemax="100">
-                    <div class="bar" style="width:0%;"></div>
-                </div>
-                <!-- The extended global progress information -->
-                <div class="progress-extended">&nbsp;</div>
             </div>
         </div>
         <!-- The loading indicator is shown during file processing -->
@@ -40,7 +31,6 @@
         <ul class="thumbnails files">
 
         </ul>
-
     </form>
     <br>
     <div class="well">
@@ -157,7 +147,6 @@
         <div class="delete">
           <button class="btn btn-danger" data-type="{%=file.delete_type%}" data-url="{%=file.delete_url%}"{% if (file.delete_with_credentials) { %} data-xhr-fields='{"withCredentials":true}'{% } %}>
               <i class="icon-trash icon-white"></i>
-              <span>Delete</span>
           </button>
       </div>
     </li>

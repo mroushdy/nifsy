@@ -20,7 +20,8 @@ app.get('/listings/new', listingController.addListing);
 app.post('/listings/new', listingController.createListing);
 
 app.get('/listings/new/photos', listingController.addPhotos);
-app.post('/listings/new/photos/upload', listingController.uploadPhoto);
+app.post('/listings/photos/upload', listingController.uploadPhoto);
+app.delete('/listings/photos/delete/:id', listingController.deletePhoto);
 
 //express.multipart({ uploadDir: __dirname + '/public/tmp', keepExtensions: true })
 

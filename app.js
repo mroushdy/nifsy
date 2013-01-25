@@ -16,7 +16,7 @@ var express = require('express')
 //make config a global variable so that every module can see it
 config = require('./config');
 
-var alloweduploadpaths = ['/listings/new/photos/upload'];
+var alloweduploadpaths = ['/listings/photos/upload'];
 
 var app = express();
 

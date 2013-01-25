@@ -60,7 +60,7 @@ exports.uploadPhoto = function(req, res) {
 
   async.forEach(req.files.files
   , function(uploaded_file, callback){
-      alleup.makeVariants(uploaded_file, function(err, saved_file){
+      alleup.makeVariants(uploaded_file, function(err, saved_file){  //saved_file is the file name
         if(err) {
           callback(err);
           return;
@@ -72,7 +72,7 @@ exports.uploadPhoto = function(req, res) {
         result.delete_type = 'DELETE';
         result.thumbnail_url = alleup.url(saved_file, 'thumb').replace('./public/','');
         result.url = alleup.url(saved_file, 'version1').replace('./public/','');
-        result.delete_url = '';
+        result.delete_url = '/listings/photos/delete/'+saved_file;
         files.push(result);
         callback(null);
       });
@@ -89,6 +89,14 @@ exports.uploadPhoto = function(req, res) {
 
 exports.addListing = function(req, res){
   res.render('addListing', { title: 'Add Listing' });
+};
+
+exports.deletePhoto = function(req, res){
+  var photo_name = req.params.id;
+  alleup.remove(photo_name, function(err) {
+    // THIS YOU CAN DELETE FILE FROM DATABASE FOR EXAMPLE
+    res.end();
+  });
 };
 
 exports.createListing = function(req, res) {
