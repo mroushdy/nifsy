@@ -89,6 +89,7 @@ a:hover {
 #footer {
   background-color: whiteSmoke;
   border-top: 1px solid #D7D7D4;
+  margin-top: 25px;
 }
 
 #footer #footer-wrap{
@@ -98,6 +99,44 @@ a:hover {
 .container .credit {
   margin: 20px 0;
 }
+
+
+/* Well
+------------------------- */
+
+.well {
+  background-color: #fff;
+  -webkit-box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+  -moz-box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+  box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+  -o-border-radius: 8px;
+  -ms-border-radius: 8px;
+  -moz-border-radius: 8px;
+  -webkit-border-radius: 8px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  overflow: hidden;
+  position: relative;
+}
+
+.well .tab {
+  padding: 13px 13px;
+  margin: -19px -19px 25px;
+  background: #e5e5e5;
+  background: -webkit-gradient(linear, center top, center bottom, from(#f6f6f6), to(#e5e5e5));
+  background: -moz-linear-gradient(top, #f6f6f6, #e5e5e5);
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#fff6f6f6', endColorstr='#ffe5e5e5', GradientType=0);
+  -moz-border-radius-topright: 6px;
+  -webkit-border-top-right-radius: 6px;
+  border-top-right-radius: 6px;
+  -moz-border-radius-topleft: 6px;
+  -webkit-border-top-left-radius: 6px;
+  border-top-left-radius: 6px;
+  border-top: 1px solid #ffffff;
+  border-bottom: 1px solid #d0d0d0;
+}
+
+
 
 /* Forms
 ------------------------- */
