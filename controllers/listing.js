@@ -109,14 +109,18 @@ exports.createListing = function(req, res) {
     }
     var listing = new Listing();
     listing.title = req.body.title;
-    listing.price = 0;
+    listing.price = req.body.price;
+    listing.description = req.body.description;
+    listing.brand = req.body.brand;
+    listing.condition = req.body.condition;
+    listing.owner_id = user._id;
     listing.facebook_friends = friends;
     listing.save(function (err, listing) {
       if (!err){ 
         res.redirect('/listings');
       }
       else { 
-        res.send({'error':'An error has occurred'});
+        res.render('addListing', { title: 'Add Listing', 'error': 'An error has occurred' });
       }
     });
   } else { res.redirect('/'); }
