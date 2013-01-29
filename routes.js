@@ -16,12 +16,13 @@ app.get('/connect/facebook/callback', passport.authorize('facebook', { scope: ['
 //logout from facebook also needs to be done as per facebook api terms
 app.get('/logout', function(req, res){ req.logout(); res.redirect('/'); });
 
-app.get('/listings/new', listingController.addListing);
-app.post('/listings/new', listingController.createListing);
+//new listings
+app.get('/listings/new', requireLogin, listingController.addListing);
+app.post('/listings/new', requireLogin, listingController.createListing);
 
-app.get('/listings/new/photos', listingController.addPhotos);
-app.post('/listings/photos/upload', listingController.uploadPhoto);
-app.delete('/listings/photos/delete/:id', listingController.deletePhoto);
+app.get('/listings/new/photos/:id', requireLogin, listingController.addPhotos);
+app.post('/listings/photos/upload', requireLogin, listingController.uploadPhoto);
+app.delete('/listings/photos/delete/:id', requireLogin, listingController.deletePhoto);
 
 //express.multipart({ uploadDir: __dirname + '/public/tmp', keepExtensions: true })
 

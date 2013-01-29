@@ -5,8 +5,9 @@ var Alleup = require('alleup');
 var alleup = new Alleup({storage : "dir", config_file: "alleup_config.json"})
 
 exports.findById = function(req, res) {
-	//res.contentType('application/json');
-	res.send('it works');
+  Listing.findOne({ '_id': req.params.id }, function (err, listing) {
+    res.send(listing);
+  });
 };
  
 exports.findAll = function(req, res) {
@@ -45,45 +46,48 @@ function listingsWithMutualFriends(user, listings, limit) {
 
 
 exports.addPhotos = function(req, res){
-  res.render('addListingPhotos', { title: 'Add Photos' });
+  res.render('addListingPhotos', { title: 'Add Photos', listing_id: req.params.id });
 };
 
 exports.uploadPhoto = function(req, res) {
-  
-  res.set({
-    'Access-Control-Allow-Origin': '*',
-    'Access-Control-Allow-Methods': 'OPTIONS, HEAD, GET, POST, PUT, DELETE',
-    'Content-Type':'application/json'
-  });
-
-  var files = [];
-
-  async.forEach(req.files.files
-  , function(uploaded_file, callback){
-      alleup.makeVariants(uploaded_file, function(err, saved_file){  //saved_file is the file name
-        if(err) {
-          callback(err);
-          return;
-        }
-        // ToDo SAVE FILE TO DATABASE
-        var result = {};
-        result.size = uploaded_file.size;
-        result.name = uploaded_file.name;
-        result.delete_type = 'DELETE';
-        result.thumbnail_url = alleup.url(saved_file, 'thumb').replace('./public/','');
-        result.url = alleup.url(saved_file, 'version1').replace('./public/','');
-        result.delete_url = '/listings/photos/delete/'+saved_file;
-        files.push(result);
-        callback(null);
+  Listing.findOne({ '_id': req.body.listing_id, owner_id: req.user._id }, function (err, listing) {
+    if(listing)
+    {
+      res.set({
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Methods': 'OPTIONS, HEAD, GET, POST, PUT, DELETE',
+        'Content-Type':'application/json'
       });
-    }
-  , function(err){
-      if(err) {
-        console.log(err);
-        res.send({'error': 'The file is not an image.'});
-      } else {
-        res.send({'files': files});
-      }
+
+      var files = [];
+
+      async.forEach(req.files.files
+      , function(uploaded_file, callback){
+          alleup.makeVariants(uploaded_file, function(err, saved_file){  //saved_file is the file name
+            if(err) {
+              callback(err);
+              return;
+            }
+            // ToDo SAVE FILE TO DATABASE
+            var result = {};
+            result.size = uploaded_file.size;
+            result.name = uploaded_file.name;
+            result.delete_type = 'DELETE';
+            result.thumbnail_url = alleup.url(saved_file, 'thumb').replace('./public/','');
+            result.url = alleup.url(saved_file, 'version1').replace('./public/','');
+            result.delete_url = '/listings/photos/delete/'+saved_file;
+            files.push(result);
+            callback(null);
+          });
+        }
+      , function(err){
+          if(err) {
+            res.send({'error': 'The file is not an image.'});
+          } else {
+            res.send({'files': files});
+          }
+      });
+    } else { res.json(500, { error: 'The logged in user does not own this listing.' }) }
   });
 };
 
@@ -95,7 +99,7 @@ exports.deletePhoto = function(req, res){
   var photo_name = req.params.id;
   alleup.remove(photo_name, function(err) {
     // THIS YOU CAN DELETE FILE FROM DATABASE FOR EXAMPLE
-    res.end();
+    res.json({ success: 'Photo has been deleted' })
   });
 };
 
@@ -103,7 +107,6 @@ exports.createListing = function(req, res) {
   user = req.user
   if(user) {
     var friends = [];
-    console.log(user);
     for (var i = 0; i < user.facebook_friends.length; i++) {
       friends.push(user.facebook_friends[i].fb_id);
     }
@@ -117,7 +120,7 @@ exports.createListing = function(req, res) {
     listing.facebook_friends = friends;
     listing.save(function (err, listing) {
       if (!err){ 
-        res.redirect('/listings');
+        res.redirect('/listings/new/photos/'+listing._id);
       }
       else { 
         res.render('addListing', { title: 'Add Listing', 'error': 'An error has occurred' });
