@@ -77,17 +77,17 @@ $(function () {
         }
     });
 
-/*
+
     // Load existing files:
     $.ajax({
         // Uncomment the following to send cross-domain cookies:
         //xhrFields: {withCredentials: true},
-        url: $('#fileupload').fileupload('option', 'url'),
+        url: '/listings/ajax/getphotos/' + $('#fileupload #listing_id').val(),
         dataType: 'json',
         context: $('#fileupload')[0]
     }).done(function (result) {
         $(this).fileupload('option', 'done').call(this, null, {result: result});
     });
-*/
+
 
 });

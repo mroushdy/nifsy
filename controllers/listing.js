@@ -2,6 +2,7 @@ var ListingModel = require("../models/listing");
 var Listing = ListingModel.Listing;
 var ListingPhoto = ListingModel.ListingPhoto;
 var listings_per_page = 10; 
+var ObjectId = require('mongoose').Types.ObjectId
 var async  = require('async');
 var Alleup = require('alleup');
 var alleup = new Alleup({storage : "dir", config_file: "alleup_config.json"});
@@ -48,11 +49,11 @@ function listingsWithMutualFriends(user, listings, limit) {
 
 
 exports.addPhotos = function(req, res){
-  res.render('addListingPhotos', { title: 'Add Photos', listing_id: req.params.id });
+  res.render('addListingPhotos', { title: 'Add Photos', listing_id: req.params.listing_id });
 };
 
 exports.uploadPhoto = function(req, res) {
-  Listing.findOne({ '_id': req.body.listing_id, owner_id: req.user._id }, function (err, listing) {
+  Listing.findOne({ '_id': req.body.listing_id, 'owner_id': req.user._id }, function (err, listing) {
     if(listing)
     {
       res.set({
@@ -93,7 +94,25 @@ exports.uploadPhoto = function(req, res) {
             listing.save(function (err, listing) { res.send({'files': files_result}); });
           }
       });
-    } else { res.json(500, { error: 'The logged in user does not own this listing.' }) }
+    } else { res.json(500, { error: 'The logged in user does not own this listing.' }); }
+  });
+};
+
+exports.ajaxGetListingPhotos = function(req, res){
+  var listing_id = req.params.listing_id;
+  results = [];
+  Listing.findOne({ '_id': listing_id}, function(err, listing) {
+    if(listing) {
+      listing.photos.forEach(function(photo, index, array){
+        var result = {};
+        result.delete_type = 'DELETE';
+        result.thumbnail_url = photo.thumbnail_url;
+        result.url = photo.url;
+        result.delete_url = photo.delete_url;
+        results.push(result); 
+      });
+      res.json({'files': results});
+    }
   });
 };
 
@@ -102,10 +121,18 @@ exports.addListing = function(req, res){
 };
 
 exports.deletePhoto = function(req, res){
-  var photo_name = req.params.id;
-  alleup.remove(photo_name, function(err) {
-    // THIS YOU CAN DELETE FILE FROM DATABASE FOR EXAMPLE
-    res.json({ success: 'Photo has been deleted' })
+  var photo_id = new ObjectId(req.params.id);
+  Listing.findOne({ 'photos._id': photo_id, 'owner_id': req.user._id }, function(err, listing) {
+    if(listing) {
+      var photo = listing.photos.id(photo_id);
+      var photo_name = photo.name;
+      photo.remove();
+      listing.save(function (err, listing) { 
+        alleup.remove(photo_name, function(err) {
+          res.json({ success: 'Photo has been deleted' })
+        });
+      });
+    }
   });
 };
 

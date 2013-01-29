@@ -20,7 +20,10 @@ app.get('/logout', function(req, res){ req.logout(); res.redirect('/'); });
 app.get('/listings/new', requireLogin, listingController.addListing);
 app.post('/listings/new', requireLogin, listingController.createListing);
 
-app.get('/listings/new/photos/:id', requireLogin, listingController.addPhotos);
+app.get('/listings/new/photos/:listing_id', requireLogin, listingController.addPhotos);
+
+app.get('/listings/ajax/getphotos/:listing_id', listingController.ajaxGetListingPhotos);
+
 app.post('/listings/photos/upload', requireLogin, listingController.uploadPhoto);
 app.delete('/listings/photos/delete/:id', requireLogin, listingController.deletePhoto);
 
