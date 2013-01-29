@@ -1,4 +1,6 @@
 var mongoose = require("mongoose");
+var Alleup = require('alleup');
+var alleup = new Alleup({storage : "dir", config_file: "alleup_config.json"});
 
 var ListingSchema = new mongoose.Schema({
   title: { type: String, required: true, index: true },
@@ -9,13 +11,33 @@ var ListingSchema = new mongoose.Schema({
   brand: { type: String, required: true },
   description: { type: String, required: true },
   date: { type: Date, default: Date.now, required: true },
+  photos: [ListingPhotoSchema], //stores photo names but without variations
   facebook_friends: [{type: String,  index:true}] //stores fb friend_ids
 });
 
+
+var ListingPhotoSchema = new mongoose.Schema({
+    name: String
+});
+
+ListingPhotoSchema.virtual('thumbnail_url').get(function() {
+    return alleup.url(this.name, 'thumb').replace('./public/',''); //replace might be different for AWS.
+});
+
+ListingPhotoSchema.virtual('delete_url').get(function() {
+    return '/listings/photos/delete/' + this.name;
+});
+
+ListingPhotoSchema.virtual('url').get(function() {
+    return alleup.url(this.name, 'version1').replace('./public/',''); //replace might be different for AWS.
+});
+
 var Listing = mongoose.model('Listing', ListingSchema);
+var ListingPhoto = mongoose.model('ListingPhoto', ListingPhotoSchema);
 
 module.exports = {
-  Listing: Listing
+  Listing: Listing,
+  ListingPhoto: ListingPhoto
 }
 
 //usage in controllers

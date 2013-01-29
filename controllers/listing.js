@@ -1,8 +1,10 @@
-var Listing = require("../models/listing").Listing;
+var ListingModel = require("../models/listing");
+var Listing = ListingModel.Listing;
+var ListingPhoto = ListingModel.ListingPhoto;
 var listings_per_page = 10; 
 var async  = require('async');
 var Alleup = require('alleup');
-var alleup = new Alleup({storage : "dir", config_file: "alleup_config.json"})
+var alleup = new Alleup({storage : "dir", config_file: "alleup_config.json"});
 
 exports.findById = function(req, res) {
   Listing.findOne({ '_id': req.params.id }, function (err, listing) {
@@ -59,8 +61,7 @@ exports.uploadPhoto = function(req, res) {
         'Content-Type':'application/json'
       });
 
-      var files = [];
-
+      var files_result = [];
       async.forEach(req.files.files
       , function(uploaded_file, callback){
           alleup.makeVariants(uploaded_file, function(err, saved_file){  //saved_file is the file name
@@ -68,15 +69,19 @@ exports.uploadPhoto = function(req, res) {
               callback(err);
               return;
             }
-            // ToDo SAVE FILE TO DATABASE
+            
+            var listingphoto = new ListingPhoto();
+            listingphoto.name = saved_file;
+            listing.photos.push(listingphoto);
+
             var result = {};
             result.size = uploaded_file.size;
             result.name = uploaded_file.name;
             result.delete_type = 'DELETE';
-            result.thumbnail_url = alleup.url(saved_file, 'thumb').replace('./public/','');
-            result.url = alleup.url(saved_file, 'version1').replace('./public/','');
-            result.delete_url = '/listings/photos/delete/'+saved_file;
-            files.push(result);
+            result.thumbnail_url = listingphoto.thumbnail_url;
+            result.url = listingphoto.url;
+            result.delete_url = listingphoto.delete_url;
+            files_result.push(result);
             callback(null);
           });
         }
@@ -84,7 +89,8 @@ exports.uploadPhoto = function(req, res) {
           if(err) {
             res.send({'error': 'The file is not an image.'});
           } else {
-            res.send({'files': files});
+
+            listing.save(function (err, listing) { res.send({'files': files_result}); });
           }
       });
     } else { res.json(500, { error: 'The logged in user does not own this listing.' }) }

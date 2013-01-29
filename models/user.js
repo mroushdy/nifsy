@@ -18,13 +18,16 @@ var UserSchema = new mongoose.Schema({
   }]
 });
 
+UserSchema.virtual('first_name').get(function () {
+  return this.name.split(/\b/)[0];
+});
 
 UserSchema.virtual('picture.profile').get(function () {
   return 'https://graph.facebook.com/' + this.facebook_provider.uid + "/picture?type=large"; //200px width variable height 
 });
 
 UserSchema.virtual('picture.small').get(function () {
-  return 'https://graph.facebook.com/' + this.facebook_provider.uid + "/picture?width=40&height=50"; 
+  return 'https://graph.facebook.com/' + this.facebook_provider.uid + "/picture?width=50&height=50"; 
 });
 
 var User = mongoose.model('User', UserSchema);
