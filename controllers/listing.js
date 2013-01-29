@@ -90,7 +90,7 @@ exports.uploadPhoto = function(req, res) {
           if(err) {
             res.send({'error': 'The file is not an image.'});
           } else {
-
+            listing.visible = 1;
             listing.save(function (err, listing) { res.send({'files': files_result}); });
           }
       });
@@ -124,6 +124,7 @@ exports.deletePhoto = function(req, res){
   var photo_id = new ObjectId(req.params.id);
   Listing.findOne({ 'photos._id': photo_id, 'owner_id': req.user._id }, function(err, listing) {
     if(listing) {
+      if(listing.photos.length <= 1) { listing.visible = false; }
       var photo = listing.photos.id(photo_id);
       var photo_name = photo.name;
       photo.remove();
