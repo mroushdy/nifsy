@@ -77,7 +77,7 @@ exports.uploadPhoto = function(req, res) {
 
             var result = {};
             result.size = uploaded_file.size;
-            result.name = uploaded_file.name;
+            result.name = listingphoto.name;
             result.delete_type = 'DELETE';
             result.thumbnail_url = listingphoto.thumbnail_url;
             result.url = listingphoto.url;
