@@ -150,7 +150,7 @@ exports.createListing = function(req, res) {
     listing.description = req.body.description;
     listing.brand = req.body.brand;
     listing.condition = req.body.condition;
-    listing.__owneruser._id;
+    listing._owner = user._id;
     listing.facebook_friends = friends;
     listing.save(function (err, listing) {
       if (!err){ 
