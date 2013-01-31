@@ -9,9 +9,15 @@
     <ul class="thumbnails listings">
     {{#each listings}}
       <li class="span4 listing">
-        <a class="thumbnail">
+        <a href="#" class="thumbnail">
           <div class="item" style="background-image: url('{{ this.photos.[0].url }}');">
-            <div class="details"><span>{{this.title}}</span></div>
+            <div class="price inner-glow">{{ this.price }} LE</div>
+            <div class="itemdown">
+              <div class="row-fluid">
+                <div class="span2"> <span class="ownerimage"><img src="{{ this._owner.picture.listing }}" /></span> </div>
+                <div class="span10 details"><span>{{this.title}}</span></div>
+              </div>
+            </div>
           </div>
         </a>
       </li>

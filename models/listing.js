@@ -15,12 +15,12 @@ ListingPhotoSchema.virtual('delete_url').get(function() {
 });
 
 ListingPhotoSchema.virtual('url').get(function() {
-    return alleup.url(this.name, 'version1').replace('./public/',''); //replace might be different for AWS.
+    return alleup.url(this.name, 'version2').replace('./public/',''); //replace might be different for AWS.
 });
 
 var ListingSchema = new mongoose.Schema({
   title: { type: String, required: true, index: true },
-  owner_id: { type: mongoose.Schema.Types.ObjectId, index: true, required: true  },
+  _owner: { type: mongoose.Schema.Types.ObjectId, index: true, required: true, ref: 'User'  },
   visible:  { type: Boolean, default: 0, required: true },
   price: { type: Number, required: true },
   condition: { type: String, required: true, enum: ['new', 'used'] },

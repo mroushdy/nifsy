@@ -26,6 +26,10 @@ UserSchema.virtual('picture.profile').get(function () {
   return 'https://graph.facebook.com/' + this.facebook_provider.uid + "/picture?type=large"; //200px width variable height 
 });
 
+UserSchema.virtual('picture.listing').get(function () {
+  return 'https://graph.facebook.com/' + this.facebook_provider.uid + "/picture?width=40&height=40"; 
+});
+
 UserSchema.virtual('picture.navbar').get(function () {
   return 'https://graph.facebook.com/' + this.facebook_provider.uid + "/picture?width=20&height=20"; 
 });

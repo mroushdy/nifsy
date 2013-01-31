@@ -53,7 +53,7 @@ exports.addPhotos = function(req, res){
 };
 
 exports.uploadPhoto = function(req, res) {
-  Listing.findOne({ '_id': req.body.listing_id, 'owner_id': req.user._id }, function (err, listing) {
+  Listing.findOne({ '_id': req.body.listing_id, '_owner': req.user._id }, function (err, listing) {
     if(listing)
     {
       res.set({
@@ -122,7 +122,7 @@ exports.addListing = function(req, res){
 
 exports.deletePhoto = function(req, res){
   var photo_id = new ObjectId(req.params.id);
-  Listing.findOne({ 'photos._id': photo_id, 'owner_id': req.user._id }, function(err, listing) {
+  Listing.findOne({ 'photos._id': photo_id, '_owner':req.user._id }, function(err, listing) {
     if(listing) {
       if(listing.photos.length <= 1) { listing.visible = false; }
       var photo = listing.photos.id(photo_id);
@@ -150,7 +150,7 @@ exports.createListing = function(req, res) {
     listing.description = req.body.description;
     listing.brand = req.body.brand;
     listing.condition = req.body.condition;
-    listing.owner_id = user._id;
+    listing.__owneruser._id;
     listing.facebook_friends = friends;
     listing.save(function (err, listing) {
       if (!err){ 
