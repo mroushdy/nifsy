@@ -1,9 +1,10 @@
 html {
-  background-color: whiteSmoke;
+  background: #d8d8d8 url(/assets/img/noise-2.png);
 }
 
 body {
   position: relative;
+  background-color: transparent;
   padding-top: 46px;
   font-family: 'Open Sans', "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
   font-weight: 400;
@@ -135,8 +136,46 @@ a:hover {
 /* Listings
 ------------------------- */
 
+.container.listings {
+  padding: 0 20px;
+  background: #eaeaea;
+
+  -webkit-border-radius: 0 0 4px 4px;
+  -moz-border-radius: 0 0 4px 4px;
+  border-radius: 0 0 4px 4px;
+
+  -webkit-box-shadow: 0 1px 1px rgba(0,0,0,.24), 0 1px 5px rgba(0,0,0,.05);
+  -moz-box-shadow: 0 1px 1px rgba(0,0,0,.24), 0 1px 5px rgba(0,0,0,.05);
+  box-shadow: 0 1px 1px rgba(0,0,0,.24), 0 1px 5px rgba(0,0,0,.05);
+}
+
 .listings-container {
   margin-top: 20px;
+}
+
+.thumbnails.listings {
+  margin-left: 0px;
+}
+
+
+.thumbnails.listings .listing {
+  padding-bottom: 15px;
+  margin-bottom: 15px;
+  position: relative;
+}
+
+.thumbnails.listings .listing::after {
+  display: block;
+  height: 1px;
+  position: absolute;
+  bottom: -1px;
+  left: 0;
+  right: 0;
+  margin: 0 -20px;
+  background: #ddd;
+  border-bottom: 1px solid #f6f6f6;
+  content: "";
+  overflow: hidden;
 }
 
 .thumbnails.listings .listing .thumbnail {
@@ -246,13 +285,7 @@ box-shadow: inset 0 0 1px 1px rgba(255,255,255,0.3),0 0 0 #000;
 ------------------------- */
 
 #footer {
-  background-color: whiteSmoke;
-  border-top: 1px solid #D7D7D4;
   margin-top: 25px;
-}
-
-#footer #footer-wrap{
-  border-top: 1px solid #E7E7E4;
 }
 
 .container .credit {
