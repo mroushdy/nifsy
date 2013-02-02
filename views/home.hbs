@@ -5,11 +5,12 @@
   </div>
 </div>
 <div class="container listings">
+  <div class="category-bar"></div>
   <div class="row listings-container">
     <ul class="thumbnails listings">
     {{#each listings}}
       <li class="span4 listing">
-        <a href="#" class="thumbnail">
+        <a href="/listing/{{ this._id}}" class="thumbnail">
           <div class="item" style="background-image: url('{{ this.photos.[0].url }}');">
             <div class="price inner-glow">{{ this.price }} LE</div>
             <div class="itemdown">

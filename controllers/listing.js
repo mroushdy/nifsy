@@ -7,9 +7,11 @@ var async  = require('async');
 var Alleup = require('alleup');
 var alleup = new Alleup({storage : "dir", config_file: "alleup_config.json"});
 
-exports.findById = function(req, res) {
+exports.showListing = function(req, res) {
   Listing.findOne({ '_id': req.params.id }, function (err, listing) {
-    res.send(listing);
+    if(listing) {
+      res.render('listing', { title: 'Listing', listing: listing });
+    } else { res.redirect('/'); }
   });
 };
  

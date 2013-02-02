@@ -27,10 +27,10 @@ app.get('/listings/ajax/getphotos/:listing_id', listingController.ajaxGetListing
 app.post('/listings/photos/upload', requireLogin, listingController.uploadPhoto);
 app.delete('/listings/photos/delete/:id', requireLogin, listingController.deletePhoto);
 
-//express.multipart({ uploadDir: __dirname + '/public/tmp', keepExtensions: true })
-
 app.get('/listings', listingController.findAll);
-app.get('/listings/:id', listingController.findById);
+app.get('/listing/:id', listingController.showListing);
+
+//
 app.put('/listings/:id', listingController.updateListing);
 app.delete('/listings/:id', listingController.deleteListing);
 

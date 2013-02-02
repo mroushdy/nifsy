@@ -1,0 +1,30 @@
+<div class="jumbotron-black masthead">
+  <div class="container">
+      <div class="listing-image-container">
+        <img class="inner-glow listing-image" src="{{ listing.photos.[0].url }}" alt="" />
+        <div class="price inner-glow">{{ listing.price }} LE</div>
+      </div>
+  </div>
+</div>
+<div class="listing-title-bar">
+  <div class="container">
+    {{listing.title}}
+  </div>
+</div>
+<div class="container top-margin">
+  <div class="row">
+    <div class="span4">
+      <div class="well">
+        <div class="tab">Owner</div>
+      </div>
+    </div>
+    <div class="span8">
+      <div class="well">
+        <div class="tab">Description</div>
+      </div>
+       <div class="well">
+        <div class="tab">Comments</div>
+      </div>
+    </div>
+  </div>
+</div>
