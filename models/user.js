@@ -23,7 +23,7 @@ UserSchema.virtual('first_name').get(function () {
 });
 
 UserSchema.virtual('picture.profile').get(function () {
-  return 'https://graph.facebook.com/' + this.facebook_provider.uid + "/picture?type=large"; //200px width variable height 
+  return 'https://graph.facebook.com/' + this.facebook_provider.uid + "/picture?width=172&height=172"; //200px width variable height 
 });
 
 UserSchema.virtual('picture.listing').get(function () {

@@ -1,30 +1,43 @@
 <div class="jumbotron-black masthead">
   <div class="container">
       <div class="listing-image-container">
+        <div class="thumb-strip">
+          {{#each listing.photos}}
+            <img src="{{ this.thumbnail_url }}" width="50" />
+          {{/each}}
+        </div>
         <img class="inner-glow listing-image" src="{{ listing.photos.[0].url }}" alt="" />
         <div class="price inner-glow">{{ listing.price }} LE</div>
       </div>
   </div>
 </div>
-<div class="listing-title-bar">
-  <div class="container">
-    {{listing.title}}
+
+<div class="container bordered-container listing-page-container">
+  <div class="bordered-container-bar listing-title-bar">
+    <div class="container">
+      {{listing.title}}
+    </div>
   </div>
-</div>
-<div class="container top-margin">
   <div class="row">
-    <div class="span4">
+    <div class="span3">
       <div class="well">
-        <div class="tab">Owner</div>
+        <div class="owner-picture"><img src="{{ listing._owner.picture.profile }}" alt=""/></div>
+        <div class="owner-name"> {{ listing._owner.first_name }} </div>
       </div>
     </div>
-    <div class="span8">
+    <div class="span9">
       <div class="well">
         <div class="tab">Description</div>
+        <div class="item-description-body">{{ listing.description }}</div>
       </div>
-       <div class="well">
+       <div class="well" style="margin-bottom: 24px;">
         <div class="tab">Comments</div>
+        <div class="fb-comments" data-href="http://nifsy.com" data-width="660" data-num-posts="5"></div>
       </div>
     </div>
   </div>
 </div>
+
+{{#extend "style"}}
+<link href='http://fonts.googleapis.com/css?family=The+Girl+Next+Door' rel='stylesheet' type='text/css'>
+{{/extend}}

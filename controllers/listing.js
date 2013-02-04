@@ -8,9 +8,10 @@ var Alleup = require('alleup');
 var alleup = new Alleup({storage : "dir", config_file: "alleup_config.json"});
 
 exports.showListing = function(req, res) {
-  Listing.findOne({ '_id': req.params.id }, function (err, listing) {
+  Listing.findOne({ '_id': req.params.id }).populate('_owner').exec(function (err, listing) {
     if(listing) {
       res.render('listing', { title: 'Listing', listing: listing });
+      console.log(listing);
     } else { res.redirect('/'); }
   });
 };
@@ -51,7 +52,12 @@ function listingsWithMutualFriends(user, listings, limit) {
 
 
 exports.addPhotos = function(req, res){
-  res.render('addListingPhotos', { title: 'Add Photos', listing_id: req.params.listing_id });
+  Listing.findOne({ '_id': req.body.listing_id, '_owner': req.user._id }, function (err, listing) {
+    if(listing)
+    {
+      res.render('addListingPhotos', { title: 'Add Photos', listing_id: req.params.listing_id });
+    } else { res.redirect('/'); }
+  });
 };
 
 exports.uploadPhoto = function(req, res) {
