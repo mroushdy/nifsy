@@ -34,7 +34,7 @@ app.get('/listing/:id', listingController.showListing);
 app.put('/listings/:id', listingController.updateListing);
 app.delete('/listings/:id', listingController.deleteListing);
 
-//require login middleware. not tested yet
+
 function requireLogin(req, res, next) {
   if (req.user) {
     next();
