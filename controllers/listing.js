@@ -180,11 +180,12 @@ exports.deleteListing = function(req, res) {
 };
 
 exports.search = function(req, res) {
-  Listing.search({title:'listing'},{} , {}, {score:true}, function (err, result) {
+  var page = 0;
+  Listing.search({'titlesearch':'listing'},{} , {}, {score:true, skip: page, limit: 20 }, function (err, results) {
         if (err) {
             console.log(err);
         } else {
-            res.json(result);
+          res.json(results.sort());
         }      
   });
 };

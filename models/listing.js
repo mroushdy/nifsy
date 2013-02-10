@@ -20,13 +20,13 @@ ListingPhotoSchema.virtual('url').get(function() {
 });
 
 var ListingSchema = new mongoose.Schema({
-  title: { type: String, required: true, index: true, fulltext:true, searchfield:'mainsearch' },
+  title: { type: String, required: true, fulltext:true, searchfield:'titlesearch' },
   _owner: { type: mongoose.Schema.Types.ObjectId, index: true, required: true, ref: 'User'  },
   visible:  { type: Boolean, default: 0, required: true },
   price: { type: Number, required: true },
   condition: { type: String, required: true, enum: ['new', 'used'] },
-  brand: { type: String, required: true, fulltext:true, searchfield:'mainsearch' },
-  description: { type: String, required: true, fulltext:true, searchfield:'mainsearch' },
+  brand: { type: String, required: true, fulltext:true, searchfield:'brandsearch' },
+  description: { type: String, required: true, fulltext:true, searchfield:'descriptionsearch' },
   date: { type: Date, default: Date.now, required: true },
   photos: [ListingPhotoSchema], //stores photo names but without variations
   facebook_friends: [{type: String,  index:true}] //stores fb friend_ids
