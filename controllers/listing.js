@@ -1,11 +1,11 @@
-var ListingModel = require("../models/listing");
-var Listing = ListingModel.Listing;
-var ListingPhoto = ListingModel.ListingPhoto;
-var listings_per_page = 10; 
-var ObjectId = require('mongoose').Types.ObjectId
-var async  = require('async');
-var Alleup = require('alleup');
-var alleup = new Alleup({storage : "dir", config_file: "alleup_config.json"});
+var ListingModel = require("../models/listing")
+  , Listing = ListingModel.Listing
+  , ListingPhoto = ListingModel.ListingPhoto
+  , listings_per_page = 10
+  , ObjectId = require('mongoose').Types.ObjectId
+  , async  = require('async')
+  , Alleup = require('alleup')
+  , alleup = new Alleup({storage : "dir", config_file: "alleup_config.json"});
 
 exports.showListing = function(req, res) {
   Listing.findOne({ '_id': req.params.id }).populate('_owner').exec(function (err, listing) {
@@ -52,7 +52,7 @@ function listingsWithMutualFriends(user, listings, limit) {
 
 
 exports.addPhotos = function(req, res){
-  Listing.findOne({ '_id': req.body.listing_id, '_owner': req.user._id }, function (err, listing) {
+  Listing.findOne({ '_id': req.params.listing_id, '_owner': req.user._id }, function (err, listing) {
     if(listing)
     {
       res.render('addListingPhotos', { title: 'Add Photos', listing_id: req.params.listing_id });
@@ -177,4 +177,14 @@ exports.updateListing = function(req, res) {
  
 exports.deleteListing = function(req, res) {
 	res.send('it works');
+};
+
+exports.search = function(req, res) {
+  Listing.search({title:'listing'},{} , {}, {score:true}, function (err, result) {
+        if (err) {
+            console.log(err);
+        } else {
+            res.json(result);
+        }      
+  });
 };

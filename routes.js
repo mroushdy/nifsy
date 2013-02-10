@@ -27,6 +27,9 @@ app.get('/listings/ajax/getphotos/:listing_id', listingController.ajaxGetListing
 app.post('/listings/photos/upload', requireLogin, listingController.uploadPhoto);
 app.delete('/listings/photos/delete/:id', requireLogin, listingController.deletePhoto);
 
+
+app.get('/listings/search', listingController.search);
+
 app.get('/listings', listingController.findAll);
 app.get('/listing/:id', listingController.showListing);
 
