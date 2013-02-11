@@ -5,12 +5,10 @@ config.web = {};
 process.env.NODE_ENV = (typeof(process.env.NODE_ENV) !== 'undefined') ? process.env.NODE_ENV : 'development';
 
 switch(process.env.NODE_ENV){
-    case 'development':
-        //abcde
     case 'production':
-        //abcde
+        //production settings here
     default:
-        //abcde
+        //development settings here
 }
 
 config.facebook.appid = '145309202292977';
