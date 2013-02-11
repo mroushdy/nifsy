@@ -1,38 +1,43 @@
-<div class="container">
-  <div class="page-header">
-    <h1> Bee3 7agatak </h1>
-    <p> Nifsy bitkhaleek tebee3 </p>
+<div class="container top-margin">
+  <div class="row">
+    <div class="span9 add-listing-tabs">
+      <div class="row-fluid">
+        <div class="span4 selected">Details</div>
+        <div class="span4">Photos</div>
+        <div class="span4">Finish</div>
+      </div>
+    </div>
   </div>
   <div class="row">
     <div class="span9">
-    <form id="add-listing-form" class="form-horizontal" action="/listings/new" method="post">
+    <form id="add-listing-form" class="form-horizontal" method="post" {{#if listing}}action="/listings/edit/{{listing._id}}"{{else}}action="/listings/new"{{/if}}>
       <div class="well">
         <div class="tab">About your listing</div>
         <div class="control-group">
           <label class="control-label" for="title">Title</label>
           <div class="controls">
             <div class="help-block">Example block-level help text here.</div>
-            <input type="text" id="title" name="title" class="span6">
+            <input type="text" id="title" name="title" class="span6" value="{{listing.title}}">
           </div>
         </div>
         <div class="control-group">
           <label class="control-label" for="brand">Brand</label>
           <div class="controls">
             <div class="help-block">Example block-level help text here.</div>
-            <input type="text" id="brand" name="brand" class="span6">
+            <input type="text" id="brand" name="brand" class="span6" value="{{listing.brand}}">
           </div>
         </div>
         <div class="control-group">
           <label class="control-label" for="description">Description</label>
           <div class="controls">
             <div class="help-block">Example block-level help text here.</div>
-            <textarea rows="4" id="description" name="description" class="span6"></textarea>
+            <textarea rows="4" id="description" name="description" class="span6">{{listing.description}}</textarea>
           </div>
         </div>
         <div class="control-group">
           <label class="control-label" for="price">Price</label>
           <div class="controls">
-            <input type="text" id="price" name="price" class="span2">
+            <input type="text" id="price" name="price" class="span2" value="{{listing.price}}">
             <span>EGP</span>
           </div>
         </div>
@@ -51,3 +56,13 @@
     </div>
   </div>
 </div>
+
+{{#if listing}}
+{{#extend "scripts"}}
+<script type="text/javascript">
+  $(function() {
+    $('#condition option[value="{{listing.condition}}"]').prop('selected', true);
+  });
+</script>
+{{/extend}}
+{{/if}}

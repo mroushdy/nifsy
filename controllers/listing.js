@@ -171,10 +171,36 @@ exports.createListing = function(req, res) {
   } else { res.redirect('/'); }
 };
  
-exports.updateListing = function(req, res) {
-	res.send('it works');
+exports.editListing = function(req, res) {
+  Listing.findOne({ '_id': req.params.id, '_owner': req.user._id }, function (err, listing) {
+    if(listing)
+    {
+      res.render('addListing', { title: 'Edit Listing', listing: listing });
+    } else { res.redirect('/'); }
+  });
 };
- 
+
+exports.updateListing = function(req, res) {
+  Listing.findOne({ '_id': req.params.id, '_owner': req.user._id }, function (err, listing) {
+    if(listing)
+    {
+      listing.title = req.body.title;
+      listing.price = req.body.price;
+      listing.description = req.body.description;
+      listing.brand = req.body.brand;
+      listing.condition = req.body.condition;
+      listing.save(function (err, lstng) {
+        if (!err){ 
+          res.redirect('/listings/new/photos/'+listing._id);
+        }
+        else { 
+          res.render('addListing', { title: 'Add Listing', listing: listing, 'error': 'An error has occurred' });
+        }
+      });
+    } else { res.redirect('/'); }
+  });
+}; 
+
 exports.deleteListing = function(req, res) {
 	res.send('it works');
 };

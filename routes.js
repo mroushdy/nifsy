@@ -20,24 +20,25 @@ app.get('/logout', function(req, res){ req.logout(); res.redirect('/'); });
 app.get('/listings/new', requireLogin, listingController.addListing);
 app.post('/listings/new', requireLogin, listingController.createListing);
 
+//listing photos
 app.get('/listings/new/photos/:listing_id', requireLogin, listingController.addPhotos);
-
 app.get('/listings/ajax/getphotos/:listing_id', listingController.ajaxGetListingPhotos);
-
 app.post('/listings/photos/upload', requireLogin, listingController.uploadPhoto);
 app.delete('/listings/photos/delete/:id', requireLogin, listingController.deletePhoto);
 
+//edit listings
+app.get('/listings/edit/:id', requireLogin, listingController.editListing);
+app.post('/listings/edit/:id', requireLogin, listingController.updateListing);
+app.delete('/listings/:id', requireLogin, listingController.deleteListing);
 
+//show listings
 app.get('/listings/search', listingController.search);
-
-app.get('/listings', listingController.findAll);
 app.get('/listing/:id', listingController.showListing);
 
-//
-app.put('/listings/:id', listingController.updateListing);
-app.delete('/listings/:id', listingController.deleteListing);
+//test route
+app.get('/listings', listingController.findAll);
 
-
+//ensure login middleware
 function requireLogin(req, res, next) {
   if (req.user) {
     next();
