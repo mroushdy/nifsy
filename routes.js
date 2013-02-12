@@ -35,6 +35,9 @@ app.delete('/listings/:id', requireLogin, listingController.deleteListing);
 app.get('/listings/search', listingController.search);
 app.get('/listing/:id', listingController.showListing);
 
+//Manage
+app.get('/mylistings', requireLogin, listingController.myListings);
+
 //test route
 app.get('/listings', listingController.findAll);
 

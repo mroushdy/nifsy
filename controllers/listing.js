@@ -205,6 +205,12 @@ exports.deleteListing = function(req, res) {
 	res.send('it works');
 };
 
+exports.myListings = function(req, res) {
+  Listing.find({ '_owner': req.user._id }, function (err, listings) {
+    res.render('myListings', { title: 'My Listings', listings: listings });
+  });
+};
+
 exports.search = function(req, res) {
   var page = 0;
   Listing.search({'titlesearch':'listing'},{} , {}, {score:true, skip: page, limit: 20 }, function (err, results) {
