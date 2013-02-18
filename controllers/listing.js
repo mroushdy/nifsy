@@ -60,6 +60,15 @@ exports.addPhotos = function(req, res){
   });
 };
 
+exports.editPhotos = function(req, res){
+  Listing.findOne({ '_id': req.params.listing_id, '_owner': req.user._id }, function (err, listing) {
+    if(listing)
+    {
+      res.render('addListingPhotos', { title: 'Edit Photos', listing_id: req.params.listing_id, edit_listing: true });
+    } else { res.redirect('/'); }
+  });
+};
+
 exports.uploadPhoto = function(req, res) {
   Listing.findOne({ '_id': req.body.listing_id, '_owner': req.user._id }, function (err, listing) {
     if(listing)
@@ -191,7 +200,7 @@ exports.updateListing = function(req, res) {
       listing.condition = req.body.condition;
       listing.save(function (err, lstng) {
         if (!err){ 
-          res.redirect('/listings/new/photos/'+listing._id);
+          res.redirect('/listings/edit/photos/'+listing._id);
         }
         else { 
           res.render('addListing', { title: 'Add Listing', listing: listing, 'error': 'An error has occurred' });

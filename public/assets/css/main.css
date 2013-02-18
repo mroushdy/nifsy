@@ -116,6 +116,11 @@ a:hover {
   margin-left: 10px;
 }
 
+.navbar .nav li a i {
+  margin-left: -4px;
+  padding-right: 6px;
+}
+
 /* Misc
 ------------------------- */
 
@@ -583,13 +588,22 @@ form .btn.next {
   margin-bottom: 25px;
 }
 
-.round-btn.black {
-  background-color: rgba(0,0,0,0.6);
+.round-btn.white {
+  background-color: #fff;
   -webkit-border-radius: 12px;
   -moz-border-radius: 12px;
   border-radius: 12px;
   border-style:none;
 }
+
+.round-btn.white .icon-black {
+  opacity: 0.6;
+}
+
+.round-btn.white:hover .icon-black {
+  opacity: 0.9;
+}
+
 
 /* Listing
 ------------------------- */

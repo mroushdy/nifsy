@@ -30,6 +30,7 @@ app.delete('/listings/photos/delete/:id', requireLogin, listingController.delete
 app.get('/listings/edit/:id', requireLogin, listingController.editListing);
 app.post('/listings/edit/:id', requireLogin, listingController.updateListing);
 app.delete('/listings/:id', requireLogin, listingController.deleteListing);
+app.get('/listings/edit/photos/:listing_id', requireLogin, listingController.editPhotos);
 
 //show listings
 app.get('/listings/search', listingController.search);

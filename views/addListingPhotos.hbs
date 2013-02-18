@@ -1,44 +1,52 @@
-<div class="container">
-    <div class="page-header">
-        <h1>Add Photos</h1>
+<div class="container top-margin">
+  <div class="row">
+    <div class="span9 add-listing-tabs">
+      <div class="row-fluid">
+        <div class="span4">Details</div>
+        <div class="span4 selected">Photos</div>
+        <div class="span4">Finish</div>
+      </div>
     </div>
-    <blockquote>
-        <p>File Upload widget with multiple file selection, drag&amp;drop support, progress bars and preview images for jQuery.<br>
-        Supports cross-domain, chunked and resumable file uploads and client-side image resizing.<br>
-        Works with any server-side platform (PHP, Python, Ruby on Rails, Java, Node.js, Go etc.) that supports standard HTML form file uploads.</p>
-    </blockquote>
-    <div class="row">
-        <div class="span9">
-            <div id="error-wrong-file-type" class="alert alert-error hide">
-              <button type="button" class="close" data-dismiss="alert">&times;</button>
-              <strong>Oh snap!</strong> Photos must be a .jpg, .gif or .png file.
+  </div>
+  <div class="row">
+      <div class="span9">
+          <div id="error-wrong-file-type" class="alert alert-error hide">
+            <button type="button" class="close" data-dismiss="alert">&times;</button>
+            <strong>Oh snap!</strong> Photos must be a .jpg, .gif or .png file.
+          </div>
+
+         <div id="error-file-too-large" class="alert alert-error hide">
+            <button type="button" class="close" data-dismiss="alert">&times;</button>
+            <strong>Oh snap!</strong> Photos must be smaller than 2mb.
+          </div>
+          <!-- The file upload form used as target for the file upload widget -->
+          <form id="fileupload" action="/listings/photos/upload" method="POST" enctype="multipart/form-data">
+            <input type="hidden" name="listing_id" id="listing_id" value="{{ listing_id }}}">
+            <div class="well">
+                <div class="tab"><span>Listing Photos</span>
+                {{#if edit_listing}}
+                <a href="/listings/edit/{{listing_id}}" class="btn gray pull-right">
+                    <i class="icon-arrow-left icon-black"></i>
+                    <span>Edit Listing</span>
+                </a>
+                {{/if}}
+                </div>
+                <!-- The ul listing the files available for upload/download -->
+                <ul class="thumbnails files">
+
+                <!-- Upload button -->
+                <li class="listing-photoupload-button span2 template-download fade in">
+                  <div class="thumbnail fileinput-button">
+                    <input type="file" name="files[]" multiple>
+                  </div>
+                </li>
+
+                </ul>
             </div>
-
-           <div id="error-file-too-large" class="alert alert-error hide">
-              <button type="button" class="close" data-dismiss="alert">&times;</button>
-              <strong>Oh snap!</strong> Photos must be smaller than 2mb.
-            </div>
-            <!-- The file upload form used as target for the file upload widget -->
-            <form id="fileupload" action="/listings/photos/upload" method="POST" enctype="multipart/form-data">
-              <input type="hidden" name="listing_id" id="listing_id" value="{{ listing_id }}}">
-              <div class="well">
-                  <div class="tab"><span>Listing Photos</span></div>
-                  <!-- The ul listing the files available for upload/download -->
-                  <ul class="thumbnails files">
-
-                  <!-- Upload button -->
-                  <li class="listing-photoupload-button span2 template-download fade in">
-                    <div class="thumbnail fileinput-button">
-                      <input type="file" name="files[]" multiple>
-                    </div>
-                  </li>
-
-                  </ul>
-              </div>
-              <span class="btn green next" id="next">Save & Continue</span>
-            </form>
-        </div>
-    </div>
+            <span class="btn green next" id="next">Save & Continue</span>
+          </form>
+      </div>
+  </div>
 </div>
 
 
@@ -76,8 +84,8 @@
       <div class="progress progress-success progress-striped active" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><div class="bar" style="width:0%;"></div></div>      
       {% if (!i) { %}
       <div class="cancel">
-        <button class="round-btn black">
-          <i class="icon-ban-circle icon-white"></i>
+        <button class="round-btn white">
+          <i class="icon-ban-circle icon-black"></i>
         </button>
       </div>
       {% } %}
@@ -97,8 +105,8 @@
       <div class="thumbnail">
         <img src="{%=file.thumbnail_url%}">
         <div class="delete">
-          <button class="round-btn black" data-type="{%=file.delete_type%}" data-url="{%=file.delete_url%}"{% if (file.delete_with_credentials) { %} data-xhr-fields='{"withCredentials":true}'{% } %}>
-              <i class="icon-trash icon-white"></i>
+          <button class="round-btn white" data-type="{%=file.delete_type%}" data-url="{%=file.delete_url%}"{% if (file.delete_with_credentials) { %} data-xhr-fields='{"withCredentials":true}'{% } %}>
+              <i class="icon-trash icon-black"></i>
           </button>
       </div>
     </li>
