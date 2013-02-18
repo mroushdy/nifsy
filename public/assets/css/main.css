@@ -387,6 +387,10 @@ a:hover {
   border-bottom: 1px solid #d0d0d0;
 }
 
+.well .tab .btn {
+  margin-top: -5px;
+}
+
 /* Add and edit listing
 ------------------------- */
 
@@ -579,6 +583,14 @@ form .btn.next {
   margin-bottom: 25px;
 }
 
+.round-btn.black {
+  background-color: rgba(0,0,0,0.6);
+  -webkit-border-radius: 12px;
+  -moz-border-radius: 12px;
+  border-radius: 12px;
+  border-style:none;
+}
+
 /* Listing
 ------------------------- */
 .jumbotron-black {
@@ -679,6 +691,35 @@ form .btn.next {
   max-width: 172px;
   position: relative;
 }
+
+/* My Listings
+------------------------- */
+
+.my-listings .you-no-listings {
+  text-align: center;
+  font-size: 14px;
+  color: #ccc;
+  margin-top: -15px;
+  line-height: 315px;
+}
+
+/* add / Edit listing
+------------------------- */
+
+.listing-photoupload-button .fileinput-button {
+  border: 1px dashed #ccc;
+  background: url('/assets/img/photo-upload-plus.png') no-repeat center center;
+  opacity: 0.7;
+}
+
+.listing-photoupload-button .fileinput-button:hover {
+  opacity: 1;
+}
+
+.listing-photoupload-button .fileinput-button input {
+  height: 120px;
+}
+
 
 /* Tablet to desktop
 ------------------------- */

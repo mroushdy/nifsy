@@ -13,7 +13,6 @@
 .fileinput-button {
   position: relative;
   overflow: hidden;
-  margin-top: -5px;
 }
 
 .fileinput-button input {
@@ -57,8 +56,8 @@
 
 .template-upload .cancel button, .template-download .delete button {
   position: absolute;
-  right: 4px;
-  top: 4px;
+  right: 8px;
+  top: 8px;
 }
 
 .thumbnails li.template-upload, .thumbnails li.template-download {

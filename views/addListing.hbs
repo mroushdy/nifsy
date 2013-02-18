@@ -12,7 +12,15 @@
     <div class="span9">
     <form id="add-listing-form" class="form-horizontal" method="post" {{#if listing}}action="/listings/edit/{{listing._id}}"{{else}}action="/listings/new"{{/if}}>
       <div class="well">
-        <div class="tab">About your listing</div>
+        <div class="tab">
+          About your listing
+          {{#if listing}}
+          <a href="/listings/new/photos/{{listing._id}}" class="btn gray pull-right">
+              <span>Edit Photos</span>
+              <i class="icon-arrow-right icon-black"></i>
+          </a>
+          {{/if}}
+        </div>
         <div class="control-group">
           <label class="control-label" for="title">Title</label>
           <div class="controls">
