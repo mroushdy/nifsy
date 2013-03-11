@@ -453,12 +453,14 @@ a:hover {
 ------------------------- */
 .btn {
   font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
-  font-weight: 500;
+  font-weight: 400;
+  color: #fff;
+  text-shadow: 0 -1px 0px rgba(0,0,0,0.2);
 }
 
 .btn:hover {
-  color: #333;
   text-decoration: none;
+  color: #fff;
   background-position: 0px;
   -webkit-transition: 0;
   -moz-transition: 0;
@@ -544,7 +546,6 @@ a:hover {
 
 .btn.green {
   border-color: #50B003 #4AA202 #429201;
-  background-color: #5DC907;
   background-color: #4FAC04;
   background: -webkit-linear-gradient(top, #5DC907 0%, #57B906 49%, #50AD06 51%, #4FAC04 100%);
   background: -moz-linear-gradient(top, #5DC907 0%, #57B906 50%, #50AD06 50.1%, #4FAC04 100%);
@@ -552,8 +553,6 @@ a:hover {
 }
 
 .btn.green:hover {
-  color: #fff;
-  background-color: #82DE09;
   background-color: #70CC05;
   background: -webkit-linear-gradient(top, #82DE09 0%, #75D208 49%, #6CCA08 51%, #70CC05 100%);
   background: -moz-linear-gradient(top, #82DE09 0%, #75D208 50%, #6CCA08 50.1%, #70CC05 100%);
@@ -756,17 +755,17 @@ form .btn.next {
 ------------------------- */
 
 @-webkit-keyframes spaceboots {
-  0% { -webkit-transform: translate(-1px, 2px) rotate(-3deg); }
-  20% { -webkit-transform: translate(-3px, 1px) rotate(0deg); }
-  40% { -webkit-transform: translate(2px, 1px) rotate(6deg); }
-  60% { -webkit-transform: translate(-1px, -1px) rotate(-3deg); }
-  80% { -webkit-transform: translate(2px, 2px) rotate(0deg); }
-  100% { -webkit-transform: translate(1px, -2px) rotate(-6deg); }
+  0% { -webkit-transform: rotate(-3deg); }
+  20% { -webkit-transform: rotate(0deg); }
+  40% { -webkit-transform: rotate(6deg); }
+  60% { -webkit-transform: rotate(0deg); }
+  80% { -webkit-transform: rotate(-6deg); }
+  100% { -webkit-transform: rotate(0deg); }
 }
 .shake:hover,
 .shake:focus {
   -webkit-animation-name: spaceboots;
-  -webkit-animation-duration: 0.4s;
+  -webkit-animation-duration: 0.3s;
   -webkit-transform-origin:50% 50%;
   -webkit-animation-iteration-count: 1;
   -webkit-animation-timing-function: linear;
