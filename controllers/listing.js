@@ -120,7 +120,7 @@ exports.ajaxGetListingPhotos = function(req, res){
   results = [];
   Listing.findOne({ '_id': listing_id}, function(err, listing) {
     if(listing) {
-      listing.photos.forEach(function(photo, index, array){
+      listing.photos.forEach(function(photo){
         var result = {};
         result.delete_type = 'DELETE';
         result.thumbnail_url = photo.thumbnail_url;
@@ -139,7 +139,13 @@ exports.addListing = function(req, res){
 
 exports.deletePhoto = function(req, res){
   var photo_id = new ObjectId(req.params.id);
-  Listing.findOne({ 'photos._id': photo_id, '_owner':req.user._id }, function(err, listing) {
+  deletePhoto(photo_id,req.user._id, function(err)  {
+    res.json({ success: 'Photo has been deleted' });
+  });
+};
+
+function deletePhoto(photo_id,user_id,callback) {
+  Listing.findOne({ 'photos._id': photo_id, '_owner':user_id }, function(err, listing) {
     if(listing) {
       if(listing.photos.length <= 1) { listing.visible = false; }
       var photo = listing.photos.id(photo_id);
@@ -147,12 +153,12 @@ exports.deletePhoto = function(req, res){
       photo.remove();
       listing.save(function (err, listing) { 
         alleup.remove(photo_name, function(err) {
-          res.json({ success: 'Photo has been deleted' })
+          callback(err);
         });
       });
     }
   });
-};
+}
 
 exports.createListing = function(req, res) {
   user = req.user
@@ -211,7 +217,19 @@ exports.updateListing = function(req, res) {
 }; 
 
 exports.deleteListing = function(req, res) {
-	res.send('it works');
+  var user_id = req.user._id;
+  Listing.findOne({ '_id': req.params.id, '_owner': user_id }, function (err, listing) {
+    if(listing)
+    {
+      listing.photos.forEach(function(photo){
+        deletePhoto(photo._id, user_id, function(err){
+          
+        });
+      });
+      listing.remove();
+      res.json({ success: 'Listing has been deleted.' });
+    } else { res.json({ error: 'Listing could not be deleted.' }); }
+  });
 };
 
 exports.myListings = function(req, res) {

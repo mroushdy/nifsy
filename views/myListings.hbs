@@ -7,7 +7,7 @@
         {{#if listings}}
         <ul class="unstyled listings">
           {{#each listings}}
-          <li>
+          <li class="listing-row" id="listing-row-{{this._id}}">
             <div class="row-fluid my-listing">
               <div class="span2"><img class="thumbnail" width="100" src="{{ this.photos.[0].thumbnail_url }}"></div>
               <div class="span10 listing-info">
@@ -21,7 +21,7 @@
                     <i class="icon-picture"></i>
                     <span>Edit Listing Photos</span>
                   </a>
-                  <a href="/listings/delete/{{this._id}}" data-listing-id="{{this._id}}" class="btn gray btn-small delete-listing-button">
+                  <a href="javascript:void(0)" data-listing-id="{{this._id}}" class="btn gray btn-small delete-listing-button">
                     <i class="icon-trash"></i>
                     <span>Delete Listing</span>
                   </a>
@@ -49,13 +49,27 @@
     <p>Are you sure you want to delete this listing?</p>
   </div>
   <div class="modal-footer">
-    <a href="#" class="btn blue" data-dismiss="modal">Close</a>
-    <a href="#" class="btn blue" data-listing-id="" data-dismiss="modal">Delete</a>
+    <a href="javascript:void(0)" class="btn blue" data-listing-id="" id="do-delete-listing" data-listing-row-id="" data-dismiss="modal">Delete</a>
   </div>
 </div>
 
 {{#extend "scripts"}}
 <script type="text/javascript">
-  
+  $(function() {
+    $(".my-listings").on("click", "a.delete-listing-button", function(event){ 
+      $('#do-delete-listing').attr('data-listing-id', $(this).attr('data-listing-id'));
+      $('#do-delete-listing').attr('data-listing-row-id', $(this).parents('.listing-row').attr('id'));
+      $('#listing-confirm-delete').modal('show');
+    });
+
+    $("#do-delete-listing").click(function(){ 
+      var listing_id = $(this).attr('data-listing-id');
+      $('#'+$(this).attr('data-listing-row-id')).fadeOut();
+      $.ajax({
+          type: "POST",
+          url: "/listings/delete/"+ listing_id
+      });
+    });
+  });
 </script>
 {{/extend}}

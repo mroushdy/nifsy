@@ -69,13 +69,6 @@ $(function () {
         ]
     });
 
-    $("#next").click(function() {
-        if($('.files li').length > 0) {
-            //redirect
-        } else {
-            $('#no-images-added').modal('show');
-        }
-    });
 
 
     // Load existing files:
